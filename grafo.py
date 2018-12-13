@@ -25,66 +25,65 @@ class Vertice(object):
 
 class Grafo(object):
 	def __init__(self):
-		self.vertices = []
-		self.aristas = {}
+		self.vertices = {}
 
-	def agregar_vertice(self, v):
+	def agregar_vertice(self, clave, valor):
+		v = Vertice(clave, valor)
 		if v not in self.vertices:
-			self.vertices.append(v)
+			self.vertices[clave] = v
 			return True
 		
 		else:
 			return False
 	
-	def agregar_arista(self, v, w, peso=0):
-		lista = [v.clave, w.clave]
-		clave = ",".join(lista)
-		if v not in self.vertices or w not in self.vertices:
-			return False
-			
-		else:
-			self.aristas[clave] = peso
-			w.agregar_adyacente(v, peso)
-			v.agregar_adyacente(w, peso)
-			return True
-	
-	def estan_conectados(self, v, w):
-		if v not in self.vertices or w not in self.vertices:
-			return False
-			
-		else:
-			if v.obtener_adyacente()[w.clave]:
+	def agregar_arista(self, clave1, clave2, peso=0):
+		if clave1 in self.vertices.keys():
+			v = self.vertices[clave1]
+			if clave2 in self.vertices.keys():
+				w = self.vertices[clave2]
+				v.agregar_adyacente(w, peso)
+				w.agregar_adyacente(v, peso)
 				return True
-				
-			else:
-				return False
-		
-	def obtener_vertice(self, v):
-		for w in self.vertices:
-			if w.obtener_clave() == v:
-				return w.obtener_valor()
-				
-		return None
-		
-	def obtener_adyacentes(self, v):
-		if v not in self.vertices:
-			return None
-			
-		else:
-			return v.obtener_adyacente()
+
+		return False
+
 	
-	def obtener_arista(self, v, w):
-		lista1 = [v, w]
-		clave1 = ",".join(lista1)
-		lista2 = [w, v]
-		clave2 = ",".join(lista2)
+	def estan_conectados(self, clave1, clave2):
+		if clave1 in self.vertices.keys():
+			v = self.vertices[clave1]
+			adyacentes = v.obtener_adyacente()
+			if clave2 in adyacentes.keys():
+				return True
 
-		for clave in self.aristas.keys():
-			if clave == clave1 or clave == clave2:
-				return self.aristas[clave]
+		return False
 
-		else:
+
+	def obtener_vertice(self):
+		if len(self.vertices) == 0:
 			return None
+		
+		for i in self.vertices.keys():
+			v = self.vertices[i]
+
+		diccionario = {}
+		diccionario[v.obtener_clave()] = v.obtener_valor()
+		return diccionario	
+
+	def obtener_adyacentes(self, clave):
+		if clave in self.vertices.keys():
+			v = self.vertices[clave]
+			return v.obtener_adyacente()
+
+		return None
+	
+	def obtener_arista(self, clave1, clave2):
+		if clave1 in self.vertices.keys():
+			v = self.vertices[clave1]
+			adyacentes = v.obtener_adyacente()
+			if clave2 in adyacentes.keys():
+				return adyacentes[clave1]
+		
+		return None
 
 
 	def obtener_largo(self):
