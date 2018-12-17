@@ -1,8 +1,5 @@
 #!/usr/bin/python3
+def listar_operaciones():
+    print ("nueva_aerolinea")
 
-comandos = {
-    LISTAR_OPERACIONES = listar_operaciones,
-    PAGERANK,
-    EXPORTAR_KML = exportar_kml,
-    NUEVA_AEROLINEA = nueva_aerolinea
-}
+comandos = {"listar_operaciones": listar_operaciones}

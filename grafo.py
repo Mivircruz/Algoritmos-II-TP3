@@ -1,62 +1,63 @@
 #!/usr/bin/python3
 
-class Arista(object):
-	def __init__(self, aeropuerto1, aeropuerto2, tiempo, precio, cant_vuelos):
-		self.conexion = {aeropuerto1, aeropuerto2}
-		self.tiempo = tiempo
-		self.precio = precio
-		self.cant_vuelos = cant_vuelos
-
-	def obtener_conexion_aeropuertos(self):
-		return self.conexion
-
-	def obtener_tiempo(self):
-		return self.tiempo
-
-	def obtener_cant_vuelos(self):
-		return self.cant_vuelos
-
-	def obtener_precio(self):
-		return self.precio
 
 
 class Vertice(object):
-	def __init__(self, ciudad, codigo):
-		self.ciudad = ciudad
-		self.codigo = codigo
-		self.adyacentes = {}
-
-	def obtener_adyacentes(self):
-		return self.adyacentes
-
-	def agregar_adyacente(self, adyacente):
-		self.adyacentes.lista.append(adyacente)
+	def __init__(self, ciudad, codigo, latitud, longitud):
+		self.vertice = {codigo: (ciudad, latitud, longitud)}
 
 	def obtener_codigo(self):
-		return self.codigo
+		return self.vertice[codigo]
 		
 	def obtener_ciudad(self):
-		return self.ciudad
+		return self.vertice.keys()
 		
+
+'''''
+casimiropastine@gmail.com
+
+
+vertices = {
+	
+	cod1: {ciudad: (lat, long)}
+	
+	cod2: {ciudad: (lat, long)}
+	
+	cod3: {}
+
+}
+
+
+aristas = {
+	cod1: {cod5: (tiempo, precio, cant), cod2: (tiempo, precio, cant)}
+	cod2: {cod1: (tiempo, precio, cant)}
+	cod3: {cod4: (tiempo, precio, cant), cod8: (tiempo, precio, cant)}
+	cod 5: {cod1: (tiempo, precio, cant)}
+}
+
+'''''
 
 class Grafo(object):
 	def __init__(self):
-		self.vertices = {}
+		self.vertices = []
 		self.aristas = {}
-		self.codigos = {}
 
-	def agregar_vertice(self, ciudad, codigo):
-		if codigo not in self.codigos()
-			v = Vertice(ciudad, codigo)
-			self.vertices[codigo] = v
-			self.codigos.lista.append(codigo)
+	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
+		if codigo not in self.vertices:
+			self.vertices.append(Vertice(ciudad, codigo, latidud, longitud))
 
 	
 	def agregar_arista(self, aeropuerto1, aeropuerto2, tiempo, precio, cant_vuelos):
-		e = Arista(aeropuerto1, aeropuerto2, tiempo, precio, cant_vuelos)
-		Vertice.agregar_adyacente(aeropuerto1, aeropuerto2)
-		Vertice.agregar_adyacente(aeropuerto2,aeropuerto1)
-		self.aristas.lista.append(e)
+		if aeropuerto1 not in self.aristas:
+			self.aristas[aeropuerto1] = {}
+
+		self.aristas[aeropuerto1][aeropuerto2] = (tiempo, precio, cant_vuelos)
+
+		if aeropuerto2 not in self.aristas:
+			self.aristas[aeropuerto2] = {}
+
+		self.aristas[aeropuerto2][aeropuerto1] = (tiempo, precio, cant_vuelos)
+		
 
 	def estan_conectados(self, codigo1, codigo2):
 		if codigo1 in self.vertices.codigos() and codigo2 in self.vertices.codigos():
@@ -69,12 +70,12 @@ class Grafo(object):
 			return None
 		
 		for i in range(0, len(self.vertices)):
-			if(self.codigos[i] == codigo)
+			if self.codigos[i] == codigo:
 				return  self.vertices[i]
 
 
 	def obtener_adyacentes(self, codigo):
-		if codigo in self.codigos():
+		if codigo in self.codigos:
 			return Vertice.obtener_adyacentes(self.vertices[codigo])
 
 
@@ -82,4 +83,4 @@ class Grafo(object):
 		return len(self.vertices)
 		
 	def __iter__(self):
-		return iter(self.vertices.values())
+		return iter(self.vertices.values)
