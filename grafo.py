@@ -1,7 +1,7 @@
 
 class Vertice(object):
 	def __init__(self, ciudad, codigo, latitud, longitud):
-		self.vertice = {codigo: (ciudad, latitud, longitud)}
+		self.vertice = {codigo: [ciudad, latitud, longitud]}
 		self.adyacentes = {}
 
 	def obtener_codigo(self):
@@ -11,14 +11,14 @@ class Vertice(object):
 		return self.vertice.keys()
 
 	def agregar_adyacente(self, codigo, tiempo, precio, cant_vuelos):
-		self.adyacentes[codigo] = (tiempo, precio, cant_vuelos)
+		self.adyacentes[codigo] = [tiempo, precio, cant_vuelos]
 
-	def obtener_adyacentes(self, codigo):
+	def obtener_adyacente(self, codigo):
 		return self.adyacentes[codigo]
 
 	def son_adyacentes(self, codigo_ady):
 		if codigo_ady in self.adyacentes:
-			return  True
+			return True
 		return False
 
 	def obtener_adyacentes(self):

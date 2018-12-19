@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-import heap as h
-import math
+
+import heapq
 import grafo as g
+import math
+
+import grafo
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
@@ -41,3 +44,44 @@ def bfs(grafo, origen):
 				cola.append(w)
 
 	return padres, orden
+
+def camino_mas_rapido(grafo, origen, destino):
+
+	if not Grafo.pertenece(grafo, origen) or not Grafo.pertenece(grafo,origen):
+		return False
+
+	distancia = {}
+	padres = {}
+	visitados = set()
+	h_vertices = {}
+
+	for key,values in Grafo.obtener_todos_vertices(grafo):
+		distancia[key] = math.inf
+
+	distancia[origen] = 0
+	padres[origen] = None
+	visitados.add(origen)
+
+	heap_dist = [(origen, dist[origen])]
+	h_vertices[origen] = Grafo.obtener_vertice(grafo, origen)
+
+	while heap_dist:
+		v = heapq.heappop(heap_dist)
+		visitados.add(v[0])
+		if v[0] == destino:
+			return padres,distancia
+
+		vertice_actual = Grafo.obtener_vertice(grafo, v[0])
+
+		for key, value in Vertice.obener_adyacentes(vertice_actual):
+
+			if key in visitados:
+				if distancia[v[1]] + Vertice.obtener_tiempo(vertice_actual, key) > distancia[key]:
+					continue
+			distancia[key] = distancia[v[1]] + Vertice.obtener_tiempo(vertice_actual, key)
+			padres[key] = v[0]
+			heapq.heappush(heap_dist)
+
+	return padres, distancia
+
+
