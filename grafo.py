@@ -11,7 +11,7 @@ class Vertice(object):
 		return self.vertice.keys()
 
 	def agregar_adyacente(self, codigo, codigo_ady, tiempo, precio, cant_vuelos):
-		self.adyacentes[codigo] = {codigo_ady : (tiempo, precio, cant_vuelos)}
+		self.adyacentes[codigo] = {codigo_ady: (tiempo, precio, cant_vuelos)}
 
 	def son_adyacentes(self, codigo_ady):
 		if codigo_ady in self.adyacentes:
@@ -19,7 +19,18 @@ class Vertice(object):
 		return False
 	def obtener_adyacentes(self):
 		return self.adyacentes
-		
+
+	def obtener_tiempo(self, codigo):
+		datos_conexion = self.adyacentes.get(codigo)
+		return datos_conexion[0]
+
+	def obtener_precio(self, codigo):
+		datos_conexion = self.adyacentes.get(codigo)
+		return datos_conexion[1]
+
+	def obtener_cant_vuelos(self, codigo):
+		datos_conexion = self.adyacentes.get(codigo)
+		return datos_conexion[2]
 
 '''''
 casimiropastine@gmail.com
