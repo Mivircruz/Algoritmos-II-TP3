@@ -10,13 +10,17 @@ class Vertice(object):
 	def obtener_ciudad(self):
 		return self.vertice.keys()
 
-	def agregar_adyacente(self, codigo, codigo_ady, tiempo, precio, cant_vuelos):
-		self.adyacentes[codigo] = {codigo_ady: (tiempo, precio, cant_vuelos)}
+	def agregar_adyacente(self, codigo, tiempo, precio, cant_vuelos):
+		self.adyacentes[codigo] = (tiempo, precio, cant_vuelos)
+
+	def obtener_adyacentes(self, codigo):
+		return self.adyacentes[codigo]
 
 	def son_adyacentes(self, codigo_ady):
 		if codigo_ady in self.adyacentes:
 			return  True
 		return False
+
 	def obtener_adyacentes(self):
 		return self.adyacentes
 
@@ -81,8 +85,9 @@ class Grafo(object):
 			return None
 		return self.vertices.get(codigo)
 
-	def obtener_todos(self):
+	def obtener_todos_vertices(self):
 		return self.vertices
+
 
 	def obtener_adyacentes(self, codigo):
 
