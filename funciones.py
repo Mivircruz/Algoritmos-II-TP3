@@ -82,6 +82,6 @@ def camino_mas_rapido(grafo, origen, destino):
 			padres[key] = v[0]
 			heapq.heappush(heap_dist)
 
-	return padres, distancia
+	return padres
 
 
