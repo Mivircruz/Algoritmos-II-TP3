@@ -53,8 +53,8 @@ class Grafo(object):
 		self.vertices = {}
 
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
-		if codigo not in self.vertices:
-			self.vertices[codigo] = Vertice(ciudad,codigo,latitud,longitud)
+
+		self.vertices[codigo] = Vertice(ciudad,codigo,latitud,longitud)
 
 	
 	def agregar_arista(self, aeropuerto1, aeropuerto2, tiempo, precio, cant_vuelos):
@@ -78,6 +78,11 @@ class Grafo(object):
 
 	def obtener_largo(self):
 		return len(self.vertices)
+
+	def pertenece(self, codigo):
+		if codigo not in self.vertices:
+			return False
+		return True
 
 
 	#NO SÉ QUÉ ODNA ESTE MÉTODO:
