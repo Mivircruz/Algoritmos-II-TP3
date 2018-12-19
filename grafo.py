@@ -81,6 +81,8 @@ class Grafo(object):
 			return None
 		return self.vertices.get(codigo)
 
+	def obtener_todos(self):
+		return self.vertices
 
 	def obtener_adyacentes(self, codigo):
 
