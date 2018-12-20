@@ -1,14 +1,19 @@
+import random
 
 class Vertice(object):
+
 	def __init__(self, ciudad, codigo, latitud, longitud):
-		self.vertice = {codigo: [ciudad, latitud, longitud]}
+		self.codigo = codigo
+		self.ciudad = ciudad
+		self.latitud = latitud
+		self.longitud = longitud
 		self.adyacentes = {}
 
 	def obtener_codigo(self):
-		return self.vertice[codigo]
+		return self.codigo
 		
 	def obtener_ciudad(self):
-		return self.vertice.keys()
+		return self.ciudad
 
 	def agregar_adyacente(self, codigo, tiempo, precio, cant_vuelos):
 		self.adyacentes[codigo] = [tiempo, precio, cant_vuelos]
@@ -80,9 +85,8 @@ class Grafo(object):
 		return self.vertices.get(codigo1).son_adyacentes(self.vertices[codigo1],codigo2)
 
 
-	def obtener_vertice(self, codigo):
-		if len(self.vertices) == 0:
-			return None
+	def obtener_vertice(self):
+		codigo = random.choice(self.vertices.keys)
 		return self.vertices.get(codigo)
 
 	def obtener_todos_vertices(self):
@@ -90,7 +94,6 @@ class Grafo(object):
 
 
 	def obtener_adyacentes(self, codigo):
-
 		return self.vertices.get(codigo).obtener_adyacentes(self.vertices[codigo])
 
 
@@ -101,9 +104,6 @@ class Grafo(object):
 		if codigo not in self.vertices:
 			return False
 		return True
-
-
-	#NO SÉ QUÉ ODNA ESTE MÉTODO:
 
 	def __iter__(self):
 		return iter(self.vertices.values)
