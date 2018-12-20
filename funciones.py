@@ -56,13 +56,14 @@ def camino_minimo(grafo, origen, destino):
 	distancia[origen] = 0
 	padres[origen] = None
 	visitados.add(origen)
-	heap_tiempo = [(distancia[origen], origen)]
+	heap_tiempo = []
+	heapq.heappush(heap_tiempo, (distancia[origen], origen))
 
 	while heap_tiempo:
 		v = heapq.heappop(heap_tiempo)
 		visitados.add(v[1])
 		if v[1] == destino:
-			return padres
+			return padres, distancia
 
 		for key in grafo.obtener_adyacentes(v[1]).keys():
 
@@ -72,7 +73,7 @@ def camino_minimo(grafo, origen, destino):
 					padres[key] = v[1]
 					heapq.heappush(heap_tiempo, (distancia[key], key))
 
-	return padres
+	return padres, distancia
 
 def camino_mas_modo(grafo, origen, destino, modo):
 
@@ -115,38 +116,54 @@ def camino_mas_modo(grafo, origen, destino, modo):
 
 	return camino
 
+def ordenar_vertices(dist):
+	heap = []
+	dist_ = {}
+
+	for clave, valor in dist.items():
+		heapq.heappush(heap, (valor, clave))
+
+	
+	return heap
+
+
 def centralidad(grafo):
 
 	cent = {}
 
-	for key, values in grafo.obtener_todos_vertices(grafo):
+	for key in grafo.obtener_todos_vertices().keys():
 		cent[key] = 0
 
-	for key1, values in grafo.obtener_todos_vertices(grafo):
-		padres_y_dist = bfs(grafo, vertice.obtener_ciudad(grafo.obtener_vertice(grafo, key1)))
+	for key1 in grafo.obtener_todos_vertices().keys():
+		padres, dist = bfs(grafo, key1)
 		cent_aux = {}
-		for key2, values in grafo.obtener_todos_vertices(grafo):
+		for key2 in grafo.obtener_todos_vertices().keys():
 			cent_aux[key2] = 0
 
 		#Filtra infinitos
-		for key2, dist in padres_y_dist[1]:
-			if dist == math.inf:
-				padres_y_dist[1].pop(dist)
+		for a in dist:
+			if type(dist) is float:
+				if math.isinf(a):
+					dist.pop(a)
 
 
 #HCER FUNCION ORDENAR_VERTICES!!!!!
-		vertices_ordenados = ordenar_vertices(grafo, dist)
+		vertices_ordenados = ordenar_vertices(dist)
 
 		for w in vertices_ordenados:
-			cent_aux[padres_y_dist[0][w]] += 1
-			cent_aux[padres_y_dist[0][w]] += cent_aux[w]
-
-		for key2, values in grafo.obtener_todos_vertices(grafo):
-			if key1 == key2:
+			if w[1] == key1:
 				continue
-			cent[key2] += cent_aux[key2]
-	return cent
 
+			cent_aux[padres[w[1]]] += 1
+			cent_aux[padres[w[1]]] += cent_aux[w[1]]
+
+		for w in grafo.obtener_todos_vertices().keys():
+			if w == key1:
+				continue
+
+			cent[w] += cent_aux[w]
+
+	return cent
 
 def recorrido_vacaciones(grafo, v, visitados, padres, contador, destino, n):
 	if contador == n and v == destino:
