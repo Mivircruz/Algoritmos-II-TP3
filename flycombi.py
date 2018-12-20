@@ -11,11 +11,11 @@ def conexiones(aeropuertos, vuelos):
     for linea in aeropuertos:
 
         info_aeropuerto = linea.strip.split(",")
-        grafo.agregar_vertice(grafo,info_aeropuerto[0], info_aeropuerto[1], info_aeropuerto[2], info_aeropuerto[3])
+        grafo.agregar_vertice(grafo, info_aeropuerto[0], info_aeropuerto[1], info_aeropuerto[2], info_aeropuerto[3])
 
     for linea in vuelos:
         info_vuelo = linea.strip.split(",")
-        grafo.agregar_arista(grafo,info_vuelo[0], info_vuelo[1], info_vuelo[2], info_vuelo[3], info_vuelo[4])
+        grafo.agregar_arista(grafo, info_vuelo[0], info_vuelo[1], info_vuelo[2], info_vuelo[3], info_vuelo[4])
 
     return grafo
 

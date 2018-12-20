@@ -65,7 +65,7 @@ def camino_mas_rapido(grafo, origen, destino):
 		v = heapq.heappop(heap_tiempo)
 		visitados.add(v[1])
 		if v[1] == destino:
-			return padres, distancia
+			return padres
 
 		vertice_actual = grafo.obtener_vertice(grafo, v[1])
 
