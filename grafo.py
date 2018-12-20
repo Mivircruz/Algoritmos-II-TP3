@@ -1,45 +1,5 @@
 import random
-
-class Vertice(object):
-
-	def __init__(self, ciudad, codigo, latitud, longitud):
-		self.codigo = codigo
-		self.ciudad = ciudad
-		self.latitud = latitud
-		self.longitud = longitud
-		self.adyacentes = {}
-
-	def obtener_codigo(self):
-		return self.codigo
-		
-	def obtener_ciudad(self):
-		return self.ciudad
-
-	def agregar_adyacente(self, codigo, tiempo, precio, cant_vuelos):
-		self.adyacentes[codigo] = [tiempo, precio, cant_vuelos]
-
-	def obtener_adyacente(self, codigo):
-		return self.adyacentes[codigo]
-
-	def son_adyacentes(self, codigo_ady):
-		if codigo_ady in self.adyacentes:
-			return True
-		return False
-
-	def obtener_adyacentes(self):
-		return self.adyacentes
-
-	def obtener_tiempo(self, codigo):
-		datos_conexion = self.adyacentes.get(codigo)
-		return datos_conexion[0]
-
-	def obtener_precio(self, codigo):
-		datos_conexion = self.adyacentes.get(codigo)
-		return datos_conexion[1]
-
-	def obtener_cant_vuelos(self, codigo):
-		datos_conexion = self.adyacentes.get(codigo)
-		return datos_conexion[2]
+import vertice
 
 '''''
 casimiropastine@gmail.com
@@ -74,15 +34,16 @@ class Grafo(object):
 
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
 
-		self.vertices[codigo] = Vertice(ciudad,codigo,latitud,longitud)
+		self.vertices[codigo] = vertice.Vertice(ciudad,codigo,latitud,longitud)
 
 	
 	def agregar_arista(self, aeropuerto1, aeropuerto2, tiempo, precio, cant_vuelos):
-		self.vertices.get(aeropuerto1).agregar_adyacente(self.vertices[aeropuerto1],aeropuerto1,  aeropuerto2, tiempo, precio, cant_vuelos)
-		self.vertices.get(aeropuerto2).agregar_adyacente(self.vertices[aeropuerto2],aeropuerto2,  aeropuerto1, tiempo, precio, cant_vuelos)
+
+		vertice.agregar_adyacente(self.vertices[aeropuerto1],aeropuerto1,  aeropuerto2, tiempo, precio, cant_vuelos)
+		vertice.agregar_adyacente(self.vertices[aeropuerto2],aeropuerto2,  aeropuerto1, tiempo, precio, cant_vuelos)
 
 	def estan_conectados(self, codigo1, codigo2):
-		return self.vertices.get(codigo1).son_adyacentes(self.vertices[codigo1],codigo2)
+		return vertice.son_adyacentes(self.vertices[codigo1],codigo2)
 
 
 	def obtener_vertice(self):
@@ -94,7 +55,7 @@ class Grafo(object):
 
 
 	def obtener_adyacentes(self, codigo):
-		return self.vertices.get(codigo).obtener_adyacentes(self.vertices[codigo])
+		return vertice.obtener_adyacentes(self.vertices[codigo])
 
 
 	def obtener_largo(self):
