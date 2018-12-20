@@ -3,12 +3,13 @@
 import funciones
 
 def listar_operaciones():
-    print("nueva_aerolinea")
-    print("caminos_mas")
-    print("camino_escalas")
+    print(comandos)
 
-comandos = {"listar_operaciones": listar_operaciones,
-            "caminos_mas" : camino_mas}
+comandos = [
+    "camino_mas" ,
+    "camino_escalas",
+    "centralidad_aprox"
+]
 
 def camino_mas(modo, origen, destino, grafo):
 
@@ -29,13 +30,14 @@ def camino_escalas(origen, destino, grafo):
 def centralidad_aprox(grafo, n):
 
     cent = funciones.centralidad(grafo)
-    i = 0
+    i = 1
 
     for key, values in cent:
+        print(cent[key])
+        if i < n:
+            print(',')
+        i+=1
         if i == n:
             return
-        print(cent[key])
-        if i < n-1
-            print(',')
 
 

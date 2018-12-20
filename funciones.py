@@ -86,13 +86,13 @@ def camino_mas_modo(grafo, origen, destino, modo):
 
 
 	for key, value in vertice.obtener_adyacentes(grafo.obtener_vertice(grafo, origen)):
-		if modo == "barato"
+		if modo == "barato":
 			a_guardar =  vertice.obtener_precio(grafo.obtener_vertice(grafo, origen))
-		else
+		else:
 			a_guardar = vertice.obtener_tiempo(grafo.obtener_vertice(grafo, origen))
 		heapq.heappush(heap, (a_guardar, key))
 
-	while heap_precios:
+	while heap:
 		v = heapq.heappop(heap_precios)
 		camino.append(v[1])
 
@@ -109,11 +109,11 @@ def camino_mas_modo(grafo, origen, destino, modo):
 		for key,values in vertice.obtener_adyacentes(vertice_actual):
 
 			if key not in visitados:
-				if modo == "barato"
+				if modo == "barato":
 					a_guardar = vertice.obtener_precio(grafo.obtener_vertice(grafo, v[1]))
-				else
+				else:
 					a_guardar = vertice.obtener_tiempo(grafo.obtener_vertice(grafo, v[1]))
-				heapq.heappush(heap_precios, (a_guardar, key)))
+				heapq.heappush(heap, (a_guardar, key))
 
 	return camino
 
