@@ -35,15 +35,18 @@ def main():
 
     for linea in sys.stdin:
 
-        if linea[0] in comandos:
-            operacion_valida = comandos.comandos[linea](grafo, parametros)
-        else:
-            operacion_valida = false
-
-
-
-        if operacion_valida == false:
+        if linea[0] not in comandos:
             print("Error")
+
+        if linea[0] == comandos[0]:
+            comandos.camino_mas(linea[1], linea[2], linea[3], grafo)
+
+        if linea[0] == comandos[1]:
+            comandos.camino_escalas(linea[1], linea[2])
+
+        else:
+            comandos.centralidad_aprox(grafo, linea[1])
+
 
 
 
