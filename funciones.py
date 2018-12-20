@@ -146,3 +146,19 @@ def centralidad(grafo):
 			cent[key2] += cent_aux[key2]
 	return cent
 
+
+def recorrido_vacaciones(grafo, v, visitados, padres, contador, destino, n):
+	if contador == n and v == destino:
+		return True
+
+	if contador == n and v != destino:
+		return False
+
+	visitados.add(v)
+	for w in grafo.obtener_adyacentes(grafo, v):
+		if w not in visitados:
+			padres[w] = v
+			if recorrido(grafo, w, visitados, padres, contador + +, destino, n)
+		return True
+	visitados.remove(visitados, v)
+	return False

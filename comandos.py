@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 
 import funciones
+import math
 
 def listar_operaciones():
     print(comandos)
 
 comandos = [
-    "camino_mas" ,
+    "camino_mas",
     "camino_escalas",
-    "centralidad_aprox"
+    "centralidad_aprox",
+    "reccorer_mundo_aprox"
 ]
 
 def camino_mas(modo, origen, destino, grafo):
@@ -39,5 +41,43 @@ def centralidad_aprox(grafo, n):
         i+=1
         if i == n:
             return
+
+def recorrer_mundo_aprox(grafo, origen):
+
+    lugares_del_mundo = grafo.obtener_todos_vertices(grafo)
+    tiempo = float('inf')
+    actual = origen
+    visitados = []
+    costo = 0
+
+    while lugares_del_mundo:
+        for w, values in vertice.obtener_adyacente(grafo.obtener_vertice(grafo, actual)):
+            if grafo.obtener_tiempo(grafo, v, w) < tiempo:
+                tiempo = grafo.obtener_tiempo(grafo, v, w)
+            actual = w
+            costo += tiempo
+        visitados.append(actual)
+        lugares_del_mundo.remove(actual)
+
+    for i in range(0, len(visitados)):
+        print(visitados[i])
+        if i < len(visitados)-1:
+            print("->")
+    print("Costo: ", costo)
+
+
+
+
+def vacaciones(grafo, origen, n):
+    visitados = set()
+    padres = {}
+    padres[origen] = None
+    funciones.recorrido_vacaciones(grafo, origen, visitados, padres, 0, origen, n)
+
+    for i in range(0, len(visitados)):
+        print(visitados[i])
+        if i < len(visitados)-1:
+            print("->")
+
 
 
