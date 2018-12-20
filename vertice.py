@@ -13,14 +13,14 @@ class Vertice(object):
     def obtener_ciudad(self):
         return self.ciudad
 
-    def agregar_adyacente(self, ciudad, tiempo, precio, cant_vuelos):
-        self.adyacentes[ciudad] = [tiempo, precio, cant_vuelos]
+    def agregar_adyacente(self, codigo, tiempo, precio, cant_vuelos):
+        self.adyacentes[codigo] = [tiempo, precio, cant_vuelos]
 
-    def obtener_adyacente(self, ciudad):
-        return self.adyacentes[ciudad]
+    def obtener_adyacente(self, codigo):
+        return self.adyacentes[codigo]
 
-    def son_adyacentes(self, ciudad_ady):
-        if ciudad_ady in self.adyacentes:
+    def son_adyacentes(self, codigo_ady):
+        if codigo_ady in self.adyacentes:
             return True
         return False
 
