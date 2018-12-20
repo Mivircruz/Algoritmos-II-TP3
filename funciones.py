@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
 import heapq
-import grafo as g
 import math
-
 import grafo
+import vertice
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
@@ -53,35 +52,56 @@ def camino_mas_rapido(grafo, origen, destino):
 	distancia = {}
 	padres = {}
 	visitados = set()
-	h_vertices = {}
 
-	for key,values in Grafo.obtener_todos_vertices(grafo):
+	for key,values in grafo.obtener_todos_vertices(grafo):
 		distancia[key] = math.inf
 
 	distancia[origen] = 0
 	padres[origen] = None
 	visitados.add(origen)
+	heap_tiempo = [(dist[origen], origen)]
 
-	heap_dist = [(origen, dist[origen])]
-	h_vertices[origen] = Grafo.obtener_vertice(grafo, origen)
+	while heap_tiempo:
+		v = heapq.heappop(heap_tiempo)
+		visitados.add(v[1])
+		if v[1] == destino:
+			return padres, distancia
 
-	while heap_dist:
-		v = heapq.heappop(heap_dist)
-		visitados.add(v[0])
-		if v[0] == destino:
-			return padres,distancia
+		vertice_actual = grafo.obtener_vertice(grafo, v[1])
 
-		vertice_actual = Grafo.obtener_vertice(grafo, v[0])
+		for key, value in vertice.obener_adyacentes(vertice_actual):
 
-		for key, value in Vertice.obener_adyacentes(vertice_actual):
-
-			if key in visitados:
-				if distancia[v[1]] + Vertice.obtener_tiempo(vertice_actual, key) > distancia[key]:
-					continue
-			distancia[key] = distancia[v[1]] + Vertice.obtener_tiempo(vertice_actual, key)
-			padres[key] = v[0]
-			heapq.heappush(heap_dist)
+			if key not in visitados:
+				if distancia[v[1]] + Vertice.obtener_tiempo(vertice_actual, key) < distancia[key]:
+					distancia[key] = distancia[v[1]] + vertice.obtener_tiempo(vertice_actual, key)
+					padres[key] = v[1]
+					heapq.heappush(heap_tiempo, (dist[key], key))
 
 	return padres
 
+def camino_mas_barato(grafo, origen, destino):
 
+	visitados = set()
+	visitados.append(origen)
+	heap_precios = []
+	camino = []
+
+
+	for key, value in vertice.obtener_adyacentes(grafo.obtener_vertice(grafo, origen)):
+		heapq.heappush(heap_precios, (vertice.obtener_precio(grafo.obtener_vertice(grafo, origen), key))
+
+	while heap_precios:
+		v = heapq.heappop(heap_precios)
+		camino.append(v[1])
+		if v[1] in visitados:
+			continue
+		visitados.append(v[1])
+
+		vertice_actual = grafo.obtener_vertice(grafo, v[1])
+
+		for key,values in vertice.obtener_adyacentes(vertice_actual):
+
+			if key not in visitados:
+				heapq.heappush(heap_precios, (vertice.obtener_precio(grafo.obtener_vertice(grafo, v[1]), key)))
+
+	return camino

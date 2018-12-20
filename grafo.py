@@ -1,4 +1,4 @@
-import random
+
 import vertice
 
 '''''
@@ -46,8 +46,7 @@ class Grafo(object):
 		return vertice.son_adyacentes(self.vertices[codigo1],codigo2)
 
 
-	def obtener_vertice(self):
-		codigo = random.choice(self.vertices.keys)
+	def obtener_vertice(self, codigo):
 		return self.vertices.get(codigo)
 
 	def obtener_todos_vertices(self):
