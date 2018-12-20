@@ -82,9 +82,9 @@ def camino_mas_modo(grafo, origen, destino, modo):
 	camino = []
 
 
-	for key in grafo.obtener_vertice(origen).obtener_adyacentes():
+	for key in  vertice.obtener_adyacentes(grafo.obtener_vertice(origen)):
 		if modo == "barato":
-			a_guardar =  grafo.obtener_precio(origen, key)
+			a_guardar = grafo.obtener_precio(origen, key)
 		else:
 			a_guardar = grafo.obtener_tiempo(origen, key)
 		heapq.heappush(heap, (a_guardar, key))

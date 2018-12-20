@@ -44,8 +44,11 @@ def main():
         if linea[0] == comandos[1]:
             comandos.camino_escalas(linea[1], linea[2])
 
-        else:
+        if linea[0] == comandos[2]:
             comandos.centralidad_aprox(grafo, linea[1])
+
+        else:
+            comandos.recorrer_mundo_aprox(grafo, linea[1])
 
 
 
