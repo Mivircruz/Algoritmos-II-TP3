@@ -82,38 +82,42 @@ def camino_mas_modo(grafo, origen, destino, modo):
 	visitados.add(origen)
 	heap = []
 	camino = []
+	camino.append(grafo.obtener_codigo(origen))
 	vertice_actual = grafo.obtener_vertice(grafo.obtener_codigo(origen))
 
-	for key in vertice_actual.obtener_adyacentes():
+	for key in vertice_actual.obtener_adyacentes().keys():
 		if modo == "barato":
-			a_guardar = grafo.obtener_precio(origen, key)
+			a_guardar = grafo.obtener_precio(grafo.obtener_codigo(origen), key)
 		else:
-			a_guardar = grafo.obtener_tiempo(origen, key)
+			a_guardar = grafo.obtener_tiempo(grafo.obtener_codigo(origen), key)
 
 		heapq.heappush(heap, (a_guardar, key))
 
 	while heap:
 		v = heapq.heappop(heap)
+		if grafo.obtener_ciudad(v[1]) in visitados:
+			continue
+
 		camino.append(v[1])
 
 		if grafo.obtener_ciudad(v[1]) == destino:
 			return camino
 
-		if v[1] in visitados:
-			continue
-		visitados.add(v[1])
+		visitados.add(grafo.obtener_ciudad(v[1]))
 
 		vertice_actual = grafo.obtener_vertice(v[1])
 
-		for key in vertice_actual.obtener_adyacentes():
+		for key in vertice_actual.obtener_adyacentes().keys():
 
-			if key not in visitados:
+			if grafo.obtener_ciudad(key) not in visitados:
 				if modo == "barato":
 					a_guardar = grafo.obtener_precio(v[1], key)
 				else:
 					a_guardar = grafo.obtener_tiempo(v[1], key)
-				camino.append(key)
+
 				heapq.heappush(heap, (a_guardar, key))
+
+
 
 	return camino
 
