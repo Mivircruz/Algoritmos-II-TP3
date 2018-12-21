@@ -22,37 +22,34 @@ def conexiones(aeropuertos, vuelos):
 
 def main():
 
-    archivos = sys.argv
-
-    aeropuerto = open(archivos[1], "r")
-    vuelos = open(archivos[2], "r")
+    aeropuerto = open(sys.argv[1], "r")
+    vuelos = open(sys.argv[2], "r")
 
     grafo = conexiones(aeropuerto, vuelos)
 
 #    archivos[1].close()
 #    archivos[2].close()
 
+    linea = sys.stdin.readline()
+    print linea
+    print comandos.comandos
+    if linea[0] not in comandos.comandos:
+        print("Error")
 
-    for linea in sys.stdin.readline():
-        print linea
-        print comandos.comandos
-        if linea[0] not in comandos.comandos:
-            print("Error")
+    if linea[0] == comandos[4]:
+        comandos.listar_operaciones()
 
-        if linea[0] == comandos[4]:
-            comandos.listar_operaciones()
+    if linea[0] == comandos[0]:
+        comandos.camino_mas(linea[1], linea[2], linea[3], grafo)
 
-        if linea[0] == comandos[0]:
-            comandos.camino_mas(linea[1], linea[2], linea[3], grafo)
+    if linea[0] == comandos[1]:
+        comandos.camino_escalas(linea[1], linea[2])
 
-        if linea[0] == comandos[1]:
-            comandos.camino_escalas(linea[1], linea[2])
+    if linea[0] == comandos[2]:
+        comandos.centralidad_aprox(grafo, linea[1])
 
-        if linea[0] == comandos[2]:
-            comandos.centralidad_aprox(grafo, linea[1])
-
-        else:
-            comandos.recorrer_mundo_aprox(grafo, linea[1])
+    else:
+        comandos.recorrer_mundo_aprox(grafo, linea[1])
 
 
 
