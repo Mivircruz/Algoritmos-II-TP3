@@ -2,8 +2,8 @@
 
 import heapq
 import math
-import grafo
-import vertice
+import grafo as g
+import vertice as v
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
@@ -62,7 +62,7 @@ def camino_minimo(grafo, origen, destino):
 	while heap_tiempo:
 		v = heapq.heappop(heap_tiempo)
 		visitados.add(v[1])
-		if v[1] == destino:
+		if grafo.obtener_ciudad(v[1]) == destino:
 			return padres, distancia
 
 		for key in grafo.obtener_adyacentes(v[1]).keys():
@@ -81,11 +81,11 @@ def camino_mas_modo(grafo, origen, destino, modo):
 	visitados.add(origen)
 	heap = []
 	camino = []
+	vertice_actual = grafo.obtener_vertice(grafo.obtener_codigo(origen))
 
-
-	for key in grafo.obtener_vertice(origen).obtener_adyacentes().keys():
+	for key in vertice_actual.obtener_adyacentes():
 		if modo == "barato":
-			a_guardar =  grafo.obtener_precio(origen, key)
+			a_guardar = grafo.obtener_precio(origen, key)
 		else:
 			a_guardar = grafo.obtener_tiempo(origen, key)
 
@@ -95,7 +95,7 @@ def camino_mas_modo(grafo, origen, destino, modo):
 		v = heapq.heappop(heap)
 		camino.append(v[1])
 
-		if v[1] == destino:
+		if grafo.obtener_ciudad(v[1]) == destino:
 			return camino
 
 		if v[1] in visitados:
@@ -104,14 +104,14 @@ def camino_mas_modo(grafo, origen, destino, modo):
 
 		vertice_actual = grafo.obtener_vertice(v[1])
 
-		for key in vertice_actual.obtener_adyacentes().keys():
+		for key in vertice_actual.obtener_adyacentes():
 
 			if key not in visitados:
 				if modo == "barato":
 					a_guardar = grafo.obtener_precio(v[1], key)
 				else:
 					a_guardar = grafo.obtener_tiempo(v[1], key)
-
+				camino.append(key)
 				heapq.heappush(heap, (a_guardar, key))
 
 	return camino

@@ -31,12 +31,19 @@ class Grafo(object):
 
 	def __init__(self):
 		self.vertices = {}
+		self.codigos = {}
 
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
 
 		self.vertices[codigo] = vertice.Vertice(ciudad, codigo, latitud, longitud)
+		self.codigos[ciudad] = codigo
 
-	
+	def obtener_codigo(self, ciudad):
+		return self.codigos.get(ciudad)
+
+	def obtener_ciudad(self, codigo):
+		return self.vertices[codigo].obtener_ciudad()
+
 	def agregar_arista(self, codigo1, codigo2, tiempo, precio, cant_vuelos):
 
 		self.vertices[codigo1].agregar_adyacente(codigo2, tiempo, precio, cant_vuelos)

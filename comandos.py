@@ -15,7 +15,7 @@ comandos = [
     "listar_operaciones"
 ]
 
-def camino_mas(grafo, origen, destino, modo):
+def camino_mas(modo, origen, destino, grafo):
 
     camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
     print origen, "->",
