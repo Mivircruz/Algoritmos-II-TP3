@@ -19,12 +19,13 @@ def camino_mas(modo, origen, destino, grafo):
 
     camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
 
-    print(len(camino))
-   # for v in camino:
-     #   if v == destino:
-       #     print v
-    #    else:
-    #        print v, "->",
+    print camino
+    for v in camino:
+        if v == grafo.obtener_codigo(destino):
+            print v
+        else:
+            print v, "->",
+
 
 
 def camino_escalas(grafo, origen, destino):
