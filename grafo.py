@@ -39,7 +39,7 @@ class Grafo(object):
 		self.codigos[ciudad] = codigo
 
 	def obtener_codigo(self, ciudad):
-		return self.codigos[ciudad]
+		return self.codigos.get(ciudad)
 
 	def obtener_ciudad(self, codigo):
 		return self.vertices[codigo].obtener_ciudad()

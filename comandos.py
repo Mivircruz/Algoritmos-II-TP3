@@ -11,7 +11,7 @@ comandos = [
     "camino_mas",
     "camino_escalas",
     "centralidad_aprox",
-    "reccorer_mundo_aprox",
+    "recorrer_mundo_aprox",
     "listar_operaciones"
 ]
 
@@ -51,6 +51,7 @@ def centralidad_aprox(grafo, n):
         if i == n:
             return
 
+
 def recorrer_mundo_aprox(grafo, origen):
 
     lugares_del_mundo = grafo.obtener_todos_vertices()
@@ -60,13 +61,21 @@ def recorrer_mundo_aprox(grafo, origen):
     costo = 0
 
     while lugares_del_mundo:
-        for w, values in vertice.obtener_adyacente(grafo.obtener_vertice(grafo, actual)):
-            if grafo.obtener_tiempo(grafo, v, w) < tiempo:
-                tiempo = grafo.obtener_tiempo(grafo, v, w)
-            actual = w
-            costo += tiempo
-        visitados.append(actual)
-        lugares_del_mundo.remove(actual)
+
+        codigo_actual = grafo.obtener_codigo(actual)
+
+        for ady in grafo.obtener_adyacentes(codigo_actual).keys():
+
+            if ady == actual:
+                continue
+
+            ciudad_ady = grafo.obtener_ciudad(ady)
+            if grafo.obtener_tiempo(codigo_actual, ady) < tiempo:
+                tiempo = grafo.obtener_tiempo(codigo_actual, ciudad_ady)
+                actual = ciudad_ady
+        costo += tiempo
+        visitados.append(codigo_actual)
+        lugares_del_mundo.pop(codigo_actual)
 
     for i in range(0, len(visitados)):
         print(visitados[i])
