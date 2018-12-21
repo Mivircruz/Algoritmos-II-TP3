@@ -39,7 +39,7 @@ class Grafo(object):
 		self.codigos[ciudad] = codigo
 
 	def obtener_codigo(self, ciudad):
-		return self.codigos.get(ciudad)
+		return self.codigos[ciudad]
 
 	def obtener_ciudad(self, codigo):
 		return self.vertices[codigo].obtener_ciudad()
@@ -73,8 +73,8 @@ class Grafo(object):
 
 	def obtener_precio(self, codigo1, codigo2):
 		if codigo1 in self.vertices.keys():
-			if codigo2 in self.vertices[codigo1].adyacentes.keys():
-				datos_conexion = self.vertices[codigo1].adyacentes[codigo2]
+			if codigo2 in self.vertices[codigo1].obtener_adyacentes().keys():
+				datos_conexion = self.vertices[codigo1].obtener_adyacente(codigo2)
 				return datos_conexion[1]
 
 		return None
@@ -82,7 +82,7 @@ class Grafo(object):
 	def obtener_cant_vuelos(self, codigo1, codigo2):
 		if codigo1 in self.vertices.keys():
 			if codigo2 in self.vertices[codigo1].adyacentes.keys():
-				datos_conexion = self.vertices[codigo1].adyacentes[codigo2]
+				datos_conexion = self.vertices[codigo1].obtener_adyacente(codigo2)
 				return datos_conexion[2]
 
 		return None

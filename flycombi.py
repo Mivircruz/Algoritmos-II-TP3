@@ -30,7 +30,7 @@ def main():
    # sys.argv[1].close()
    # sys.argv[2].close()
 
-    linea = sys.stdin.readline()
+    linea = sys.stdin.readline().rstrip('\n')
     parametros = linea.split(",")
     a_ejecutar = parametros[0].split(" ")
     aux = " "
@@ -54,9 +54,13 @@ def main():
         comandos.camino_escalas(grafo, a_ejecutar[1], parametros[1])
 
     elif a_ejecutar[0] == comandos.comandos[2]:
+        if len(a_ejecutar) > 2:
+            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
         comandos.centralidad_aprox(grafo, a_ejecutar[1])
 
     else:
+        if len(a_ejecutar) > 2:
+            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
         comandos.recorrer_mundo_aprox(grafo, a_ejecutar[1])
 
 
