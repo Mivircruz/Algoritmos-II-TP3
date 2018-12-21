@@ -27,29 +27,31 @@ def main():
 
     grafo = conexiones(aeropuerto, vuelos)
 
-#    archivos[1].close()
-#    archivos[2].close()
+   # sys.argv[1].close()
+   # sys.argv[2].close()
 
     linea = sys.stdin.readline()
-    print linea
-    print comandos.comandos
-    if linea[0] not in comandos.comandos:
-        print("Error")
+    parametros = linea.split(",")
+    a_ejecutar = parametros[0].split(" ")
 
-    if linea[0] == comandos[4]:
+    if a_ejecutar[0] not in comandos.comandos:
+        print("Error")
+        return
+
+    if a_ejecutar[0] == comandos.comandos[4]:
         comandos.listar_operaciones()
 
-    if linea[0] == comandos[0]:
-        comandos.camino_mas(linea[1], linea[2], linea[3], grafo)
+    elif a_ejecutar[0] == comandos.comandos[0]:
+        comandos.camino_mas(a_ejecutar[1], parametros[1], parametros[2], grafo)
 
-    if linea[0] == comandos[1]:
-        comandos.camino_escalas(linea[1], linea[2])
+    elif a_ejecutar[0] == comandos.comandos[1]:
+        comandos.camino_escalas(a_ejecutar[1], parametros[1])
 
-    if linea[0] == comandos[2]:
-        comandos.centralidad_aprox(grafo, linea[1])
+    elif a_ejecutar[0] == comandos.comandos[2]:
+        comandos.centralidad_aprox(grafo, a_ejecutar[1])
 
     else:
-        comandos.recorrer_mundo_aprox(grafo, linea[1])
+        comandos.recorrer_mundo_aprox(grafo, a_ejecutar[1])
 
 
 
