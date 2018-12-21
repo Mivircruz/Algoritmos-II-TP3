@@ -39,7 +39,7 @@ def main():
         print("Error")
         return
 
-    if a_ejecutar[0] == comandos.comandos[4]:
+    if a_ejecutar[0] == comandos.comandos[5]:
         comandos.listar_operaciones()
 
     elif a_ejecutar[0] == comandos.comandos[0]:
@@ -58,6 +58,10 @@ def main():
             a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
         comandos.centralidad_aprox(grafo, a_ejecutar[1])
 
+    elif a_ejecutar[0] == comandos.comandos[4]:
+        if len(a_ejecutar) > 2:
+            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
+        comandos.vacaciones(grafo, a_ejecutar[1], a_ejecutar[2])
     else:
         if len(a_ejecutar) > 2:
             a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))

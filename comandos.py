@@ -12,6 +12,7 @@ comandos = [
     "camino_escalas",
     "centralidad_aprox",
     "recorrer_mundo_aprox",
+    "vacaciones",
     "listar_operaciones"
 ]
 
@@ -98,15 +99,14 @@ def recorrer_mundo_aprox(grafo, origen):
 
 
 def vacaciones(grafo, origen, n):
-    visitados = set()
     padres = {}
-    padres[origen] = None
-    funciones.recorrido_vacaciones(grafo, origen, visitados, padres, 0, origen, n)
+    padres[grafo.obtener_codigo(origen)] = None
 
-    for i in range(0, len(visitados)):
-        print(visitados[i])
-        if i < len(visitados)-1:
-            print("->")
+    funciones.recorrido_vacaciones(grafo, origen, padres, 0, origen, n)
+
+   # for key, values in padres:
+    #    print(values)
+     #   print("->")
 
 
 

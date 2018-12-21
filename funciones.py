@@ -121,6 +121,23 @@ def camino_mas_modo(grafo, origen, destino, modo):
 
 	return camino
 
+def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
+
+	if contador == n and v == destino:
+		return True
+
+	if contador == n and v != destino:
+		return False
+
+	codigo_v = grafo.obtener_codigo(v)
+	for w in grafo.obtener_adyacentes(codigo_v).keys():
+		ciudad_w = grafo.obtener_ciudad(w)
+		padres[ciudad_w] = v
+		contador += 1
+		if recorrido_vacaciones(grafo, ciudad_w, padres, contador, destino, n) == True:
+			return True
+	padres.pop(codigo_v)
+	return False
 
 def ordenar_vertices(dist):
 	heap = []
@@ -173,19 +190,3 @@ def centralidad(grafo):
 
 
 
-def _recorrido_vacaciones(grafo, v, visitados, padres, contador, destino, n):
-	if contador == n and v == destino:
-		return True
-
-	if contador == n and v != destino:
-		return False
-
-	visitados.add(v)
-	for w in grafo.obtener_adyacentes(v):
-		if w not in visitados:
-			padres[w] = v
-			contador += 1
-			if recorrido(grafo, w, visitados, padres, contador, destino, n):
-				return True
-	visitados.remove(visitados, v)
-	return False
