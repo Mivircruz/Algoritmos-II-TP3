@@ -19,7 +19,6 @@ def camino_mas(modo, origen, destino, grafo):
 
     camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
 
-    print camino
     for v in camino:
         if v == grafo.obtener_codigo(destino):
             print v
@@ -30,14 +29,26 @@ def camino_mas(modo, origen, destino, grafo):
 
 def camino_escalas(grafo, origen, destino):
 
-    recorrido = funciones.camino_minimo(grafo, origen, destino)
+    padres, orden = funciones.bfs(grafo, grafo.obtener_codigo(origen))
+    v = padres[grafo.obtener_codigo(destino)]
+    lista = []
+    lista.append(grafo.obtener_codigo(destino))
 
-    for v in recorrido[0].keys():
-        if v == destino:
-            print(v)
+    while v != grafo.obtener_codigo(origen):
+        lista.append(v)
+        v = padres[v]
+
+    if v != padres[grafo.obtener_codigo(destino)]:
+        lista.append(v)
+
+    while lista:
+        if len(lista) == 1:
+         print lista.pop()
+
         else:
-            print(recorrido[0][v], "->")
-
+            print lista.pop(), "->",
+            
+            
 def centralidad_aprox(grafo, n):
 
     cent = funciones.centralidad(grafo)
