@@ -4,30 +4,38 @@ import funciones
 import math
 
 def listar_operaciones():
-    print(comandos)
+    print comandos
+
 
 comandos = [
     "camino_mas",
     "camino_escalas",
     "centralidad_aprox",
-    "reccorer_mundo_aprox"
+    "reccorer_mundo_aprox",
+    "listar_operaciones"
 ]
 
-def camino_mas(modo, origen, destino, grafo):
+def camino_mas(grafo, origen, destino, modo):
 
-    padres = funciones.camino_mas_rapido(grafo, origen, destino, modo)
-    print(origen, "->")
-    for key, values in padres:
-        print(padres[key], "->")
-    print(destino)
+    camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
+    print origen, "->",
+    for v in camino:
+        if v == destino:
+            print v
+        else:
+            print v, "->",
 
-def camino_escalas(origen, destino, grafo):
+
+def camino_escalas(grafo, origen, destino):
 
     recorrido = funciones.camino_minimo(grafo, origen, destino)
-    print(origen, "->")
-    for key, velues in recorrido:
-        print(recorrido[key], "->")
-    print(destino)
+    print origen, "->",
+    print recorrido
+    for v in recorrido[0].keys():
+        if v == destino:
+            print v
+        else:
+            print recorrido[0][v], "->",
 
 def centralidad_aprox(grafo, n):
 
@@ -44,7 +52,7 @@ def centralidad_aprox(grafo, n):
 
 def recorrer_mundo_aprox(grafo, origen):
 
-    lugares_del_mundo = grafo.obtener_todos_vertices(grafo)
+    lugares_del_mundo = grafo.obtener_todos_vertices()
     tiempo = float('inf')
     actual = origen
     visitados = []
