@@ -29,14 +29,18 @@ def main():
 
     grafo = conexiones(aeropuerto, vuelos)
 
-    archivos.close()
-    archivos.close()
+#    archivos[1].close()
+#    archivos[2].close()
 
 
-    for linea in sys.stdin:
-
-        if linea[0] not in comandos:
+    for linea in sys.stdin.readline():
+        print linea
+        print comandos.comandos
+        if linea[0] not in comandos.comandos:
             print("Error")
+
+        if linea[0] == comandos[4]:
+            comandos.listar_operaciones()
 
         if linea[0] == comandos[0]:
             comandos.camino_mas(linea[1], linea[2], linea[3], grafo)
