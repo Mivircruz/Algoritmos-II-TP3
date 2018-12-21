@@ -36,7 +36,7 @@ class Grafo(object):
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
 
 		self.vertices[codigo] = vertice.Vertice(ciudad, codigo, latitud, longitud)
-		self.codigos[ciudad] = codigo
+		self.codigos[ciudad].append(codigo)
 
 	def obtener_codigo(self, ciudad):
 		return self.codigos.get(ciudad)
