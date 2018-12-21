@@ -4,7 +4,7 @@ import funciones
 import math
 
 def listar_operaciones():
-    print comandos
+    print(comandos)
 
 
 comandos = [
@@ -18,24 +18,24 @@ comandos = [
 def camino_mas(modo, origen, destino, grafo):
 
     camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
-    print origen, "->",
-    for v in camino:
-        if v == destino:
-            print v
-        else:
-            print v, "->",
+
+    print(len(camino))
+   # for v in camino:
+     #   if v == destino:
+       #     print v
+    #    else:
+    #        print v, "->",
 
 
 def camino_escalas(grafo, origen, destino):
 
     recorrido = funciones.camino_minimo(grafo, origen, destino)
-    print origen, "->",
-    print recorrido
+
     for v in recorrido[0].keys():
         if v == destino:
-            print v
+            print(v)
         else:
-            print recorrido[0][v], "->",
+            print(recorrido[0][v], "->")
 
 def centralidad_aprox(grafo, n):
 

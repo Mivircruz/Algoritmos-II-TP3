@@ -33,6 +33,7 @@ def main():
     linea = sys.stdin.readline()
     parametros = linea.split(",")
     a_ejecutar = parametros[0].split(" ")
+    aux = " "
 
     if a_ejecutar[0] not in comandos.comandos:
         print("Error")
@@ -42,10 +43,15 @@ def main():
         comandos.listar_operaciones()
 
     elif a_ejecutar[0] == comandos.comandos[0]:
+        if len(a_ejecutar) > 2:
+            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
         comandos.camino_mas(a_ejecutar[1], parametros[1], parametros[2], grafo)
 
     elif a_ejecutar[0] == comandos.comandos[1]:
-        comandos.camino_escalas(a_ejecutar[1], parametros[1])
+        if len(a_ejecutar) > 2:
+            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
+
+        comandos.camino_escalas(grafo, a_ejecutar[1], parametros[1])
 
     elif a_ejecutar[0] == comandos.comandos[2]:
         comandos.centralidad_aprox(grafo, a_ejecutar[1])

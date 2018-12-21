@@ -51,7 +51,7 @@ def camino_minimo(grafo, origen, destino):
 	visitados = set()
 
 	for key in grafo.obtener_todos_vertices():
-		distancia[key] = float('inf')
+		distancia[grafo.obtener_ciudad(key)] = float('inf')
 
 	distancia[origen] = 0
 	padres[origen] = None
@@ -61,18 +61,19 @@ def camino_minimo(grafo, origen, destino):
 
 	while heap_tiempo:
 		v = heapq.heappop(heap_tiempo)
-		visitados.add(v[1])
-		if grafo.obtener_ciudad(v[1]) == destino:
+		v_codigo = grafo.obtener_codigo(v[1])
+		visitados.add(v_codigo)
+		if v[1] == destino:
 			return padres, distancia
-
-		for key in grafo.obtener_adyacentes(v[1]).keys():
+		for key in grafo.obtener_adyacentes(v_codigo):
 
 			if key not in visitados:
-				if (distancia[v[1]] + grafo.obtener_cant_vuelos(v[1], key)) < distancia[key]:
-					distancia[key] = distancia[v[1]] + grafo.obtener_cant_vuelos(v[1], key)
-					padres[key] = v[1]
-					heapq.heappush(heap_tiempo, (distancia[key], key))
-
+				cant_vuelos = grafo.obtener_cant_vuelos(v_codigo, key)
+				w_ciudad = grafo.obtener_ciudad(key)
+				if distancia[v[1]] + cant_vuelos < distancia[w_ciudad]:
+					distancia[w_ciudad] = distancia[v[1]] + cant_vuelos
+					padres[key] = v_codigo
+					heapq.heappush(heap_tiempo, (distancia[w_ciudad], key))
 	return padres, distancia
 
 def camino_mas_modo(grafo, origen, destino, modo):
