@@ -45,7 +45,7 @@ def main():
     elif a_ejecutar[0] == comandos.comandos[0]:
         if len(a_ejecutar) > 2:
             a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-        comandos.camino_mas(a_ejecutar[1], parametros[1], parametros[2], grafo)
+        comandos.camino_mas(grafo, parametros[1], parametros[2], a_ejecutar[1])
 
     elif a_ejecutar[0] == comandos.comandos[1]:
         if len(a_ejecutar) > 2:
