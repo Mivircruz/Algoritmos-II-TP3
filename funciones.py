@@ -1,9 +1,10 @@
-#!/usr/bin/python3
+# !/usr/bin/python3
 
 import heapq
 import math
 import grafo as g
 import vertice as v
+
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
@@ -22,6 +23,7 @@ def dfs(grafo, origen):
 	orden[origen] = 0
 	recorrido_dfs(grafo, origen, visitados, padres, orden)
 	return padres, orden
+
 
 def bfs(grafo, origen):
 	visitados = set()
@@ -42,14 +44,14 @@ def bfs(grafo, origen):
 				orden[w] = orden[v] + 1
 				cola.append(w)
 
-	return padres,orden
+	return padres, orden
 
-def camino_minimo(grafo, origen, destino):
+
+def camino_minimo(grafo, origen, destino, modo):
 
 	distancia = {}
 	padres = {}
 	visitados = set()
-
 	for key in grafo.obtener_todos_vertices():
 		distancia[grafo.obtener_ciudad(key)] = float('inf')
 
@@ -66,23 +68,27 @@ def camino_minimo(grafo, origen, destino):
 		if v[1] == destino:
 			return padres, distancia
 		for key in grafo.obtener_adyacentes(v_codigo):
-
 			if key not in visitados:
-				cant_vuelos = grafo.obtener_cant_vuelos(v_codigo, key)
+				if modo == "barato":
+					peso = grafo.obtener_precio(v_codigo, key)
+				elif modo == "rapido":
+					peso = grafo.obtener_tiempo(v_codigo, key)
+				else:
+					peso = grafo.obtener_cant_vuelos(v_codigo, key)
+
 				w_ciudad = grafo.obtener_ciudad(key)
-				if distancia[v[1]] + cant_vuelos < distancia[w_ciudad]:
-					distancia[w_ciudad] = distancia[v[1]] + cant_vuelos
+				if distancia[v[1]] + peso < distancia[w_ciudad]:
+					distancia[w_ciudad] = distancia[v[1]] + peso
 					padres[key] = v_codigo
 					heapq.heappush(heap_tiempo, (distancia[w_ciudad], key))
+
 	return padres, distancia
 
-def camino_mas_modo(grafo, origen, destino, modo):
+def prim(grafo, origen, modo):
 
 	visitados = set()
 	visitados.add(origen)
 	heap = []
-	camino = []
-	camino.append(grafo.obtener_codigo(origen))
 	vertice_actual = grafo.obtener_vertice(grafo.obtener_codigo(origen))
 
 	for key in vertice_actual.obtener_adyacentes().keys():
@@ -91,17 +97,21 @@ def camino_mas_modo(grafo, origen, destino, modo):
 		else:
 			a_guardar = grafo.obtener_tiempo(grafo.obtener_codigo(origen), key)
 
-		heapq.heappush(heap, (a_guardar, key))
+		heapq.heappush(heap, (a_guardar, key, grafo.obtener_codigo(origen)))
+
+	arbol = g.Grafo()
+	for v in grafo.obtener_todos_vertices().values():
+		arbol.agregar_vertice(v.obtener_ciudad(), v.obtener_codigo(), v.obtener_latitud(), v.obtener_longitud())
 
 	while heap:
 		v = heapq.heappop(heap)
 		if grafo.obtener_ciudad(v[1]) in visitados:
 			continue
 
-		camino.append(v[1])
-
-		if grafo.obtener_ciudad(v[1]) == destino:
-			return camino
+		if modo == "barato":
+			arbol.agregar_arista(v[1], v[2], 0, v[0], 0)
+		else:
+			arbol.agregar_arista(v[1], v[2], v[0], 0, 0)
 
 		visitados.add(grafo.obtener_ciudad(v[1]))
 
@@ -115,14 +125,14 @@ def camino_mas_modo(grafo, origen, destino, modo):
 				else:
 					a_guardar = grafo.obtener_tiempo(v[1], key)
 
-				heapq.heappush(heap, (a_guardar, key))
+				heapq.heappush(heap, (a_guardar, key, v[1]))
 
 
 
-	return camino
+	return arbol
+
 
 def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
-
 	if contador == n and v == destino:
 		return True
 
@@ -139,6 +149,7 @@ def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
 	padres.pop(codigo_v)
 	return False
 
+
 def ordenar_vertices(dist):
 	heap = []
 	dist_ = {}
@@ -146,12 +157,10 @@ def ordenar_vertices(dist):
 	for clave, valor in dist.items():
 		heapq.heappush(heap, (valor, clave))
 
-	
 	return heap
 
 
 def centralidad(grafo):
-
 	cent = {}
 
 	for key in grafo.obtener_todos_vertices().keys():
@@ -163,14 +172,13 @@ def centralidad(grafo):
 		for key2 in grafo.obtener_todos_vertices().keys():
 			cent_aux[key2] = 0
 
-		#Filtra infinitos
+		# Filtra infinitos
 		for a in dist:
 			if type(dist) is float:
 				if math.isinf(a):
 					dist.pop(a)
 
-
-#HCER FUNCION ORDENAR_VERTICES!!!!!
+		# HCER FUNCION ORDENAR_VERTICES!!!!!
 		vertices_ordenados = ordenar_vertices(dist)
 
 		for w in vertices_ordenados:
@@ -187,6 +195,3 @@ def centralidad(grafo):
 			cent[w] += cent_aux[w]
 
 	return cent
-
-
-
