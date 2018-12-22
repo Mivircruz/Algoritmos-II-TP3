@@ -31,11 +31,11 @@ class Grafo(object):
 	def obtener_todos_vertices(self):
 		return self.vertices
 
-	def obtener_aeropuertos(self,ciudad):
+	def obtener_aeropuertos(self, ciudad):
 
 		lista_aeropuertos = []
 
-		for key,value in vertices:
+		for key,value in self.vertices:
 			if value.obtener_ciudad() == ciudad:
 				lista_aeropuertos.append(value)
 		return lista_aeropuertos
