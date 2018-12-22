@@ -17,6 +17,7 @@ def camino_mas(grafo, linea):
     origen = parametros[1]
     destino = parametros[2]
 
+
     arbol = f.prim(grafo, origen, modo)
     padres, dist = f.bfs(arbol, arbol.obtener_codigo(origen))
     lista = []
