@@ -1,45 +1,16 @@
 
 import vertice
 
-'''''
-casimiropastine@gmail.com
-
-
-vertices = {
-	
-	cod1: {ciudad: (lat, long)}
-	
-	cod2: {ciudad: (lat, long)}
-	
-	cod3: {}
-
-}
-
-
-aristas = {
-	cod1: {cod5: (tiempo, precio, cant), cod2: (tiempo, precio, cant)}
-	cod2: {cod1: (tiempo, precio, cant)}
-	cod3: {cod4: (tiempo, precio, cant), cod8: (tiempo, precio, cant)}
-	cod 5: {cod1: (tiempo, precio, cant)}
-}
-
-'''''
-
 #Grafo implementado como diccionario de diccionarios
 
 class Grafo(object):
 
 	def __init__(self):
 		self.vertices = {}
-		self.codigos = {}
 
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
 
 		self.vertices[codigo] = vertice.Vertice(ciudad, codigo, latitud, longitud)
-		self.codigos[ciudad].append(codigo)
-
-	def obtener_codigo(self, ciudad):
-		return self.codigos.get(ciudad)
 
 	def obtener_ciudad(self, codigo):
 		return self.vertices[codigo].obtener_ciudad()
@@ -48,6 +19,7 @@ class Grafo(object):
 
 		self.vertices[codigo1].agregar_adyacente(codigo2, tiempo, precio, cant_vuelos)
 		self.vertices[codigo2].agregar_adyacente(codigo1, tiempo, precio, cant_vuelos)
+
 
 	def estan_conectados(self, codigo1, codigo2):
 		return vertice.son_adyacentes(self.vertices[codigo1], codigo2)
@@ -59,33 +31,26 @@ class Grafo(object):
 	def obtener_todos_vertices(self):
 		return self.vertices
 
+	def obtener_aeropuertos(self,ciudad):
+
+		lista_aeropuertos = []
+
+		for key,value in vertices:
+			if value.obtener_ciudad() == ciudad:
+				lista_aeropuertos.append(value)
+		return lista_aeropuertos
 
 	def obtener_adyacentes(self, codigo):
 		return self.vertices[codigo].obtener_adyacentes()
 
 	def obtener_tiempo(self, codigo1, codigo2):
-		if codigo1 in self.vertices.keys():
-			if codigo2 in self.vertices[codigo1].adyacentes.keys():
-				datos_conexion = self.vertices[codigo1].adyacentes[codigo2]
-				return datos_conexion[0]
-
-		return None
+		return self.vertices[codigo1].obtener_tiempo(codigo2)
 
 	def obtener_precio(self, codigo1, codigo2):
-		if codigo1 in self.vertices.keys():
-			if codigo2 in self.vertices[codigo1].obtener_adyacentes().keys():
-				datos_conexion = self.vertices[codigo1].obtener_adyacente(codigo2)
-				return datos_conexion[1]
-
-		return None
+		return self.vertices[codigo1].obtener_precio(codigo2)
 
 	def obtener_cant_vuelos(self, codigo1, codigo2):
-		if codigo1 in self.vertices.keys():
-			if codigo2 in self.vertices[codigo1].adyacentes.keys():
-				datos_conexion = self.vertices[codigo1].obtener_adyacente(codigo2)
-				return datos_conexion[2]
-
-		return None
+		return self.vertices[codigo1].obtener_cant_vuelos(codigo2)
 
 	def obtener_largo(self):
 		return len(self.vertices)
