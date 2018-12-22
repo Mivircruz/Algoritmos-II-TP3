@@ -6,7 +6,7 @@ import funciones
 
 def camino_mas(grafo, linea):
 
-    parametros = linea.split(",")
+    parametros = obtener_parametros(linea)
 
     modo = parametros[0]
     origen = parametros[1]
@@ -34,7 +34,7 @@ def camino_mas(grafo, linea):
 
 def camino_escalas(grafo, linea):
 
-    parametros = funciones.obtener_parametros(linea)
+    parametros = linea.split(",")
 
     origen = parametros[0]
     destino = parametros[1]
@@ -65,9 +65,11 @@ def centralidad_aprox(grafo, linea):
     vertices = funciones.ordenar_vertices(cent)
 
     for i in range(0, int(linea)):
-        print vertices.pop()[0],
-        if i != int(linea):
-            print ", "
+        if i != int(linea)-1:
+            print vertices.pop()[0]+",",
+        else:
+            print vertices.pop()[0]
+            
 
 def recorrer_mundo_aprox(grafo, linea):
 
@@ -130,3 +132,4 @@ comandos = {
     "recorrer_mundo_aprox": recorrer_mundo_aprox,
     "vacaciones": vacaciones
 }
+
