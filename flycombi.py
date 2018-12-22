@@ -35,11 +35,11 @@ def main():
     while len(linea) > 0:
         a_ejecutar = linea.split(" ")
 
-        if a_ejecutar not in comandos.comandos:
+        if a_ejecutar[0] not in comandos.comandos.keys():
             print("Error")
             continue
         else:
-            comandos.comandos(grafo, linea)
+            comandos.comandos.get(a_ejecutar[0])(grafo, linea)
 
         linea = sys.stdin.readline().rstrip('\n')
 
