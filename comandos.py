@@ -123,9 +123,11 @@ def vacaciones(grafo, linea):
     origen = parametros[0]
 
     padres = {}
-    padres[grafo.obtener_codigo(origen)] = None
 
-    funciones.recorrido_vacaciones(grafo, origen, padres, 0, origen, n)
+    for aeropuerto in grafo.obtener_aeropuertos(origen):
+        padres[aeropuerto] = None
+        if funciones.recorrido_vacaciones(grafo, aeropuerto, padres, 0, origen, n):
+            break
 
 # for key, values in padres:
 #    print(values)

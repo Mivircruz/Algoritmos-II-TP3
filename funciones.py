@@ -158,7 +158,7 @@ def prim(grafo, aeropuerto_origen, modo):
 
 		for key in vertice_actual.obtener_adyacentes().keys():
 			ciudad_adyacente = grafo.obtener_ciudad(key)
-			
+
 			if ciudad_adyacente not in visitados:
 
 				key = obtener_peso_minimo(grafo, v[1], ciudad_adyacente, modo)
@@ -173,20 +173,21 @@ def prim(grafo, aeropuerto_origen, modo):
 
 
 def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
-	if contador == n and v == destino:
+
+	ciudad_actual = grafo.obtener_ciudad(v)
+
+	if contador == n and ciudad_actual == destino:
 		return True
 
-	if contador == n and v != destino:
+	if contador == n and ciudad_actual != destino:
 		return False
 
-	codigo_v = grafo.obtener_codigo(v)
-	for w in grafo.obtener_adyacentes(codigo_v).keys():
-		ciudad_w = grafo.obtener_ciudad(w)
-		padres[ciudad_w] = v
+	for adyacente in grafo.obtener_adyacentes(v).keys():
+		padres[adyacente] = v
 		contador += 1
-		if recorrido_vacaciones(grafo, ciudad_w, padres, contador, destino, n) == True:
+		if recorrido_vacaciones(grafo, adyacente, padres, contador, destino, n):
 			return True
-	padres.pop(codigo_v)
+	padres.pop(v)
 	return False
 
 
