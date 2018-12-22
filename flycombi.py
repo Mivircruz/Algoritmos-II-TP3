@@ -35,12 +35,18 @@ def main():
     while len(linea) > 0:
         a_ejecutar = linea.split(" ")
 
-        if a_ejecutar[0] not in comandos.comandos.keys():
+        if a_ejecutar[0] == "listar_operaciones":
+            for funcion in comandos.comandos:
+                print funcion
+
+        elif a_ejecutar[0] not in comandos.comandos.keys():
             print("Error")
             continue
+
         else:
-            comandos.comandos.get(a_ejecutar[0])(grafo, linea)
+            comandos.comandos.get(a_ejecutar[0])(grafo, a_ejecutar[1])
 
         linea = sys.stdin.readline().rstrip('\n')
 
 main()
+
