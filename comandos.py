@@ -4,15 +4,6 @@ import funciones as f
 import
 import funciones
 
-comandos = {
-    "listar_operaciones": listar_operaciones,
-    "camino_mas": camino_mas,
-    "camino_escalas": camino_escalas,
-    "centralidad_aprox": centralidad_aprox,
-    "recorrer_mundo_aprox": recorrer_mundo_aprox,
-    "vacaciones": vacaciones
-}
-
 def listar_operaciones(grafo, linea):
     for funcion in comandos:
         if funcion != "listar_operaciones":
@@ -138,3 +129,12 @@ def vacaciones(grafo, linea):
 # for key, values in padres:
 #    print(values)
 #   print("->")
+
+comandos = {
+    "listar_operaciones": listar_operaciones,
+    "camino_mas": camino_mas,
+    "camino_escalas": camino_escalas,
+    "centralidad_aprox": centralidad_aprox,
+    "recorrer_mundo_aprox": recorrer_mundo_aprox,
+    "vacaciones": vacaciones
+}
