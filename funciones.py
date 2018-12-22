@@ -122,8 +122,8 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 
 def prim(grafo, aeropuerto_origen, modo):
 
-	visitados = set()
-	visitados.add(aeropuerto_origen)
+	visitados = []
+	visitados.append(aeropuerto_origen)
 	heap = []
 	arbol = g.Grafo()
 	vertice_actual = grafo.obtener_vertice(aeropuerto_origen)
@@ -152,7 +152,7 @@ def prim(grafo, aeropuerto_origen, modo):
 		else:
 			arbol.agregar_arista(v[1], v[2], v[0], 0, 0)
 
-		visitados.add(grafo.obtener_ciudad(v[1]))
+		visitados.append(grafo.obtener_ciudad(v[1]))
 
 		vertice_actual = grafo.obtener_vertice(v[1])
 

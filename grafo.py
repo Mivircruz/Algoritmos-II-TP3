@@ -7,13 +7,17 @@ class Grafo(object):
 
 	def __init__(self):
 		self.vertices = {}
+		self.ciudades = []
 
 	def agregar_vertice(self, ciudad, codigo, latitud, longitud):
-
 		self.vertices[codigo] = vertice.Vertice(ciudad, codigo, latitud, longitud)
+		self.ciudades.append(ciudad)
 
 	def obtener_ciudad(self, codigo):
 		return self.vertices[codigo].obtener_ciudad()
+
+	def obtener_todas_ciudades(self):
+		return self.ciudades
 
 	def agregar_arista(self, codigo1, codigo2, tiempo, precio, cant_vuelos):
 
@@ -22,7 +26,7 @@ class Grafo(object):
 
 
 	def estan_conectados(self, codigo1, codigo2):
-		return vertice.son_adyacentes(self.vertices[codigo1], codigo2)
+		return self.vertices[codigo1].son_adyacentes(codigo2)
 
 
 	def obtener_vertice(self, codigo):

@@ -1,13 +1,11 @@
 # !/usr/bin/python3
 
-import funciones as f
-import
 import funciones
 
 def listar_operaciones(grafo, linea):
     for funcion in comandos:
         if funcion != "listar_operaciones":
-            print funcion
+            print(funcion)
 
 def camino_mas(grafo, linea):
 
@@ -18,8 +16,8 @@ def camino_mas(grafo, linea):
     destino = parametros[2]
 
 
-    arbol = f.prim(grafo, origen, modo)
-    padres, dist = f.bfs(arbol, arbol.obtener_codigo(origen))
+    arbol = funciones.prim(grafo, origen, modo)
+    padres, dist = funciones.bfs(arbol, arbol.obtener_codigo(origen))
     lista = []
     lista.append(grafo.obtener_codigo(destino))
     v = lista[0]
@@ -31,10 +29,10 @@ def camino_mas(grafo, linea):
 
     while lista:
         if len(lista) == 1:
-            print lista.pop()
+            print(lista.pop())
 
         else:
-            print lista.pop(), "->",
+            print(lista.pop(), "->")
 
 
 
@@ -45,7 +43,7 @@ def camino_escalas(grafo, linea):
     origen = parametros[0]
     destino = parametros[1]
 
-    padres, orden = f.bfs(grafo, grafo.obtener_codigo(origen))
+    padres, orden = funciones.bfs(grafo, grafo.obtener_codigo(origen))
     v = padres[grafo.obtener_codigo(destino)]
     lista = []
     lista.append(grafo.obtener_codigo(destino))
@@ -59,10 +57,10 @@ def camino_escalas(grafo, linea):
 
     while lista:
         if len(lista) == 1:
-            print lista.pop()
+            print(lista.pop())
 
         else:
-            print lista.pop(), "->",
+            print(lista.pop(), "->")
 
 
 def centralidad_aprox(grafo, linea):
@@ -87,7 +85,7 @@ def recorrer_mundo_aprox(grafo, linea):
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
 
-    lugares_del_mundo = grafo.obtener_todos_vertices()
+    lugares_del_mundo = grafo.obtener_todas_ciudades()
     tiempo = float('inf')
     actual = origen
     visitados = []
@@ -96,19 +94,21 @@ def recorrer_mundo_aprox(grafo, linea):
     while lugares_del_mundo:
 
         codigo_actual = grafo.obtener_codigo(actual)
+        visitados.append(codigo_actual)
+        lugares_del_mundo.pop(actual)
 
         for ady in grafo.obtener_adyacentes(codigo_actual).keys():
 
-            if ady == actual:
+            ady = funciones.obtener_peso_minimo(grafo, codigo_actual, ady, "rapido")
+            ciudad_ady = grafo.obtener_ciudad(ady)
+            if ciudad_ady == actual:
                 continue
 
-            ciudad_ady = grafo.obtener_ciudad(ady)
-            if grafo.obtener_tiempo(codigo_actual, ady) < tiempo:
-                tiempo = grafo.obtener_tiempo(codigo_actual, ciudad_ady)
+            tiempo_ady = grafo.obtener_tiempo(codigo_actual, ady)
+            if  tiempo_ady < tiempo:
+                tiempo = tiempo_ady
                 actual = ciudad_ady
         costo += tiempo
-        visitados.append(codigo_actual)
-        lugares_del_mundo.pop(codigo_actual)
 
     for i in range(0, len(visitados)):
         print(visitados[i])
@@ -121,6 +121,7 @@ def vacaciones(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
+    n = parametros[1]
 
     padres = {}
 
