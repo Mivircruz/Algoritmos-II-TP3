@@ -31,42 +31,16 @@ def main():
    # sys.argv[2].close()
 
     linea = sys.stdin.readline().rstrip('\n')
-    parametros = linea.split(",")
-    a_ejecutar = parametros[0].split(" ")
-    aux = " "
 
-    if a_ejecutar[0] not in comandos.comandos:
-        print("Error")
-        return
+    while len(linea) > 0:
+        a_ejecutar = linea.split(" ")
 
-    if a_ejecutar[0] == comandos.comandos[5]:
-        comandos.listar_operaciones()
+        if a_ejecutar not in comandos.comandos:
+            print("Error")
+            continue
+        else:
+            comandos.comandos(grafo, linea)
 
-    elif a_ejecutar[0] == comandos.comandos[0]:
-        if len(a_ejecutar) > 2:
-            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-        comandos.camino_mas(grafo, parametros[1], parametros[2], a_ejecutar[1])
-
-    elif a_ejecutar[0] == comandos.comandos[1]:
-        if len(a_ejecutar) > 2:
-            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-
-        comandos.camino_escalas(grafo, a_ejecutar[1], parametros[1])
-
-    elif a_ejecutar[0] == comandos.comandos[2]:
-        if len(a_ejecutar) > 2:
-            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-        comandos.centralidad_aprox(grafo, a_ejecutar[1])
-
-    elif a_ejecutar[0] == comandos.comandos[4]:
-        if len(a_ejecutar) > 2:
-            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-        comandos.vacaciones(grafo, a_ejecutar[1], a_ejecutar[2])
-    else:
-        if len(a_ejecutar) > 2:
-            a_ejecutar[1] = aux.join((a_ejecutar[1], a_ejecutar[2]))
-        comandos.recorrer_mundo_aprox(grafo, a_ejecutar[1])
-
-
+        linea = sys.stdin.readline().rstrip('\n')
 
 main()

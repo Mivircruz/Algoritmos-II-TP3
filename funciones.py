@@ -5,6 +5,20 @@ import math
 import grafo as g
 import vertice as v
 
+def obtener_parametros(linea):
+
+	parametros = []
+	sep = " "
+	parametros.append(linea.split(","))
+	aux = parametros[0].split(" ")
+
+	if len(aux) > 2:
+		aux[1] = sep.join((aux[1], aux[2]))
+
+	parametros.insert(0, aux[1])
+
+	return parametros
+
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
