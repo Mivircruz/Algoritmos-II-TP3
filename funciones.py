@@ -61,40 +61,41 @@ def bfs(grafo, origen):
 	return padres, orden
 
 
-def camino_minimo(grafo, origen, destino, modo):
+def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 
 	distancia = {}
 	padres = {}
 	visitados = set()
-	for key in grafo.obtener_todos_vertices():
-		distancia[grafo.obtener_ciudad(key)] = float('inf')
+	heap = []
 
-	distancia[origen] = 0
-	padres[origen] = None
-	visitados.add(origen)
-	heap_tiempo = []
-	heapq.heappush(heap_tiempo, (distancia[origen], origen))
+	for vertice in grafo.obtener_todos_vertices().keys():
+		for aeropuerto in grafo.obtener_aeropuertos(grafo.obtener_ciudad(vertice)):
+			distancia[aeropuerto] = float('inf')
 
-	while heap_tiempo:
-		v = heapq.heappop(heap_tiempo)
-		v_codigo = grafo.obtener_codigo(v[1])
-		visitados.add(v_codigo)
-		if v[1] == destino:
+	distancia[aeropuerto_origen] = 0
+	padres[aeropuerto_origen] = None
+	visitados.add(aeropuerto_origen)
+	heapq.heappush(heap, (distancia[aeropuerto_origen], aeropuerto_origen))
+
+	while heap:
+
+		vertice = heapq.heappop(heap)
+		visitados.add(vertice[1])
+
+		if grafo.obtener_ciudad(vertice[1]) == destino:
 			return padres, distancia
-		for key in grafo.obtener_adyacentes(v_codigo):
-			if key not in visitados:
-				if modo == "barato":
-					peso = grafo.obtener_precio(v_codigo, key)
-				elif modo == "rapido":
-					peso = grafo.obtener_tiempo(v_codigo, key)
-				else:
-					peso = grafo.obtener_cant_vuelos(v_codigo, key)
 
-				w_ciudad = grafo.obtener_ciudad(key)
-				if distancia[v[1]] + peso < distancia[w_ciudad]:
-					distancia[w_ciudad] = distancia[v[1]] + peso
-					padres[key] = v_codigo
-					heapq.heappush(heap_tiempo, (distancia[w_ciudad], key))
+		for adyacente in grafo.obtener_adyacentes(vertice[1]).keys():
+			if adyacente not in visitados:
+				if modo == "barato":
+					peso = grafo.obtener_precio(vertice[1], adyacente)
+				else:
+					peso = grafo.obtener_tiempo(vertice[1], adyacente)
+
+				if vertice[0] + peso < distancia[adyacente]:
+					distancia[adyacente] = vertice[0] + peso
+					padres[adyacente] = vertice[1]
+					heapq.heappush(heap, (distancia[adyacente], adyacente))
 
 	return padres, distancia
 
