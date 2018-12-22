@@ -39,9 +39,10 @@ class Grafo(object):
 
 		lista_aeropuertos = []
 
-		for key,value in self.vertices:
+		for key, value in self.vertices.items():
 			if value.obtener_ciudad() == ciudad:
-				lista_aeropuertos.append(value)
+				lista_aeropuertos.append(key)
+
 		return lista_aeropuertos
 
 	def obtener_adyacentes(self, codigo):
@@ -66,3 +67,4 @@ class Grafo(object):
 
 	def __iter__(self):
 		return iter(self.vertices.values)
+
