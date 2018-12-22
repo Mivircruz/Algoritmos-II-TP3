@@ -1,10 +1,14 @@
-#!/usr/bin/python3
+# !/usr/bin/python3
 
-import funciones
+import funciones as f
 import math
 
+
 def listar_operaciones():
-    print(comandos)
+    for funcion in comandos:
+        if funcion != "listar_operaciones":
+            print funcion
+
 
 
 comandos = [
@@ -16,21 +20,30 @@ comandos = [
     "listar_operaciones"
 ]
 
-def camino_mas(modo, origen, destino, grafo):
 
-    camino = funciones.camino_mas_modo(grafo, origen, destino, modo)
+def camino_mas(grafo, origen, destino, modo):
+    arbol = f.prim(grafo, origen, modo)
+    padres, dist = f.bfs(arbol, arbol.obtener_codigo(origen))
+    lista = []
+    lista.append(grafo.obtener_codigo(destino))
+    v = lista[0]
 
-    for v in camino:
-        if v == grafo.obtener_codigo(destino):
-            print v
+    while v!= grafo.obtener_codigo(origen):
+        v = padres[v]
+        lista.append(v)
+
+
+    while lista:
+        if len(lista) == 1:
+            print lista.pop()
+
         else:
-            print v, "->",
+            print lista.pop(), "->",
 
 
 
 def camino_escalas(grafo, origen, destino):
-
-    padres, orden = funciones.bfs(grafo, grafo.obtener_codigo(origen))
+    padres, orden = f.bfs(grafo, grafo.obtener_codigo(origen))
     v = padres[grafo.obtener_codigo(destino)]
     lista = []
     lista.append(grafo.obtener_codigo(destino))
@@ -44,14 +57,13 @@ def camino_escalas(grafo, origen, destino):
 
     while lista:
         if len(lista) == 1:
-         print lista.pop()
+            print lista.pop()
 
         else:
             print lista.pop(), "->",
-            
-            
-def centralidad_aprox(grafo, n):
 
+
+def centralidad_aprox(grafo, n):
     cent = funciones.centralidad(grafo)
     i = 1
 
@@ -59,13 +71,12 @@ def centralidad_aprox(grafo, n):
         print(cent[key])
         if i < n:
             print(',')
-        i+=1
+        i += 1
         if i == n:
             return
 
 
 def recorrer_mundo_aprox(grafo, origen):
-
     lugares_del_mundo = grafo.obtener_todos_vertices()
     tiempo = float('inf')
     actual = origen
@@ -91,11 +102,9 @@ def recorrer_mundo_aprox(grafo, origen):
 
     for i in range(0, len(visitados)):
         print(visitados[i])
-        if i < len(visitados)-1:
+        if i < len(visitados) - 1:
             print("->")
     print("Costo: ", costo)
-
-
 
 
 def vacaciones(grafo, origen, n):
@@ -104,9 +113,6 @@ def vacaciones(grafo, origen, n):
 
     funciones.recorrido_vacaciones(grafo, origen, padres, 0, origen, n)
 
-   # for key, values in padres:
-    #    print(values)
-     #   print("->")
-
-
-
+# for key, values in padres:
+#    print(values)
+#   print("->")
