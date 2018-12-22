@@ -2,27 +2,23 @@
 
 import funciones
 
-def listar_operaciones(grafo, linea):
-    for funcion in comandos:
-        if funcion != "listar_operaciones":
-            print(funcion)
+
 
 def camino_mas(grafo, linea):
 
-    parametros = funciones.obtener_parametros(linea)
+    parametros = linea.split(",")
 
     modo = parametros[0]
     origen = parametros[1]
     destino = parametros[2]
 
 
-    arbol = funciones.prim(grafo, origen, modo)
-    padres, dist = funciones.bfs(arbol, arbol.obtener_codigo(origen))
+    padres, dist = funciones.camino_minimo(grafo, origen, destino, modo)
     lista = []
     lista.append(grafo.obtener_codigo(destino))
     v = lista[0]
 
-    while v!= grafo.obtener_codigo(origen):
+    while v != origen:
         v = padres[v]
         lista.append(v)
 
@@ -65,20 +61,13 @@ def camino_escalas(grafo, linea):
 
 def centralidad_aprox(grafo, linea):
 
-    parametros = funciones.obtener_parametros(linea)
-    n = parametros[0]
-
     cent = funciones.centralidad(grafo)
-    i = 1
+    vertices = funciones.ordenar_vertices(cent)
 
-    for key, values in cent:
-        print(cent[key])
-        if i < n:
-            print(',')
-        i += 1
-        if i == n:
-            return
-
+    for i in range(0, int(linea)):
+        print vertices.pop()[0],
+        if i != int(linea):
+            print ", "
 
 def recorrer_mundo_aprox(grafo, linea):
 
@@ -135,7 +124,6 @@ def vacaciones(grafo, linea):
 #   print("->")
 
 comandos = {
-    "listar_operaciones": listar_operaciones,
     "camino_mas": camino_mas,
     "camino_escalas": camino_escalas,
     "centralidad_aprox": centralidad_aprox,
