@@ -6,6 +6,27 @@ import grafo as g
 import vertice as v
 
 
+def obtener_parametros(linea):
+
+	parametros = linea.split(" ")
+	sep = " "
+	aux1 = []
+	parametros_final = []
+	parametros_final.append(parametros[0])
+
+	for i in range(1, len(parametros)):
+		aux1.append(parametros[i])
+
+	cadena = sep.join(aux1)
+	aux2 = cadena.split(",")
+
+	for i in range(0, len(aux2)):
+		parametros_final.append(aux2[i])
+
+
+	return parametros_final
+
+
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
 	for w in grafo.obtener_adyacentes(v):
