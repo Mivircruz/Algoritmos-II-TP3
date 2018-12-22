@@ -5,20 +5,6 @@ import math
 import grafo as g
 import vertice as v
 
-def obtener_parametros(linea):
-
-	parametros = []
-	sep = " "
-	parametros.append(linea.split(","))
-	aux = parametros[0].split(" ")
-
-	if len(aux) > 2:
-		aux[1] = sep.join((aux[1], aux[2]))
-
-	parametros.insert(0, aux[1])
-
-	return parametros
-
 
 def recorrido_dfs(grafo, v, visitados, padres, orden):
 	visitados.add(v)
@@ -130,17 +116,17 @@ def prim(grafo, aeropuerto_origen, modo):
 
 	for adyacente in vertice_actual.obtener_adyacentes().keys():
 		if modo == "barato":
-			peso_arista = grafo.obtener_precio(grafo.obtener_codigo(aeropuerto_origen), adyacente)
+			peso_arista = grafo.obtener_precio(aeropuerto_origen, adyacente)
 		else:
-			peso_arista = grafo.obtener_tiempo(grafo.obtener_codigo(aeropuerto_origen), adyacente)
+			peso_arista = grafo.obtener_tiempo(aeropuerto_origen, adyacente)
 
 		heapq.heappush(heap, (peso_arista, adyacente, aeropuerto_origen))
 
 
-#POR QUÉ VALUES SI USAS EL VERTICE COMO CLASE PARA LLAMAR A LAS PRIMITIVAS???
+#POR QUe VALUES SI USAS EL VERTICE COMO CLASE PARA LLAMAR A LAS PRIMITIVAS???
 
 	for v in grafo.obtener_todos_vertices().values():
-		arbol.agregar_vertice(v.obtener_ciudad(), v.obtener_codigo(), v.obtener_latitud(), v.obtener_longitud())
+		arbol.agregar_vertice(v.obtener_ciudad(), v.obtener_codigo(), 0, 0)
 
 	while heap:
 		v = heapq.heappop(heap)
@@ -192,13 +178,11 @@ def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
 
 
 def ordenar_vertices(dist):
-	heap = []
-	dist_ = {}
 
-	for clave, valor in dist.items():
-		heapq.heappush(heap, (valor, clave))
+	lista = dist.items()
+	lista.sort(key=lambda x: x[1])
 
-	return heap
+	return lista
 
 
 def centralidad(grafo):
@@ -223,11 +207,11 @@ def centralidad(grafo):
 		vertices_ordenados = ordenar_vertices(dist)
 
 		for w in vertices_ordenados:
-			if w[1] == key1:
+			if w[0] == key1:
 				continue
 
-			cent_aux[padres[w[1]]] += 1
-			cent_aux[padres[w[1]]] += cent_aux[w[1]]
+			cent_aux[padres[w[0]]] += 1
+			cent_aux[padres[w[0]]] += cent_aux[w[0]]
 
 		for w in grafo.obtener_todos_vertices().keys():
 			if w == key1:
@@ -236,3 +220,4 @@ def centralidad(grafo):
 			cent[w] += cent_aux[w]
 
 	return cent
+
