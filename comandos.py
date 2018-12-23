@@ -6,7 +6,7 @@ import funciones
 
 def camino_mas(grafo, linea):
 
-    parametros = obtener_parametros(linea)
+    parametros = funciones.obtener_parametros(linea)
 
     modo = parametros[0]
     origen = parametros[1]
@@ -35,11 +35,12 @@ def camino_mas(grafo, linea):
 
 
     while lista:
-        if len(lista) == 1:
-            print(lista.pop())
+        if len(lista) != 1:
+            print lista.pop()+"->",
 
         else:
-            print(lista.pop(), "->")
+            print lista.pop()
+
 
 
 def camino_escalas(grafo, linea):
