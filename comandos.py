@@ -128,10 +128,10 @@ def recorrer_mundo_aprox(grafo, linea):
         costo += tiempo
 
     for i in range(0, len(visitados)):
-        print(visitados[i])
+        print visitados[i]
         if i < len(visitados) - 1:
-            print("->")
-    print("Costo: ", costo)
+            print" -> "
+    print"Costo: "+costo
 
 
 def vacaciones(grafo, linea):
@@ -148,9 +148,12 @@ def vacaciones(grafo, linea):
         if funciones.recorrido_vacaciones(grafo, aeropuerto, padres, 0, origen, n, visitados):
             break
 
-# for key, values in padres:
-#    print(values)
-#   print("->")
+    if len(visitados) == 0:
+        print "No se encontro recorrido"
+    else:
+         for values in padres.values():
+           print values
+           print" -> "
 
 comandos = {
     "camino_mas": camino_mas,
