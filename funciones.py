@@ -89,7 +89,7 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 		visitados.add(ciudad_actual)
 
 		if ciudad_actual == destino:
-			return padres, distancia
+			return padres, distancia, peso_total, vertice[1]
 
 		for adyacente in grafo.obtener_adyacentes(v[1]).keys():
 			ciudad_adyacente = grafo.obtener_ciudad(adyacente)
@@ -105,7 +105,7 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 					padres[adyacente] = vertice[1]
 					heapq.heappush(heap, (distancia[adyacente], adyacente))
 
-	return padres, distancia, peso_total
+	return padres, distancia, peso_total, vertice[1]
 
 def prim(grafo, aeropuerto_origen, modo):
 
