@@ -91,13 +91,13 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 		if ciudad_actual == destino:
 			return padres, distancia, peso_total, vertice[1]
 
-		for adyacente in grafo.obtener_adyacentes(v[1]).keys():
+		for adyacente in grafo.obtener_adyacentes(vertice[1]).keys():
 			ciudad_adyacente = grafo.obtener_ciudad(adyacente)
 			if ciudad_adyacente not in visitados:
 				if modo == "barato":
-					peso = grafo.obtener_precio(vertice[1], adyacente)
+					peso = int(grafo.obtener_precio(vertice[1], adyacente))
 				else:
-					peso = grafo.obtener_tiempo(vertice[1], adyacente)
+					peso = int(grafo.obtener_tiempo(vertice[1], adyacente))
 
 				if vertice[0] + peso < distancia[adyacente]:
 					distancia[adyacente] = vertice[0] + peso
