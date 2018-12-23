@@ -36,7 +36,7 @@ def camino_mas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print lista.pop()+"->",
+            print lista.pop()+" -> ",
 
         else:
             print lista.pop()
@@ -146,13 +146,14 @@ def vacaciones(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
+    visitados = []
     n = parametros[1]
 
     padres = {}
 
     for aeropuerto in grafo.obtener_aeropuertos(origen):
         padres[aeropuerto] = None
-        if funciones.recorrido_vacaciones(grafo, aeropuerto, padres, 0, origen, n):
+        if funciones.recorrido_vacaciones(grafo, aeropuerto, padres, 0, origen, n, visitados):
             break
 
 # for key, values in padres:
