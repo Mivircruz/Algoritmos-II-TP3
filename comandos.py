@@ -49,46 +49,38 @@ def camino_escalas(grafo, linea):
 
     origen = parametros[0]
     destino = parametros[1]
-    arreglo_ordenes = []
-    arreglo_padres = []
-    arreglo_origenes = []
-    i = 0
+    aeropuertos_origen = grafo.obtener_aeropuertos(origen)
+    aeropuertos_destino = grafo.obtener_aeropuertos(destino)
+    padres_final = {}
+    indice = 0
     mejor_orden = float('inf')
+    destino_final = None
 
-    for aeropuerto in grafo.obtener_aeropuertos(origen):
-        padres, orden = funciones.bfs(grafo, aeropuerto)
-        arreglo_ordenes[i] = orden
-        arreglo_padres[i] = padres
-        arreglo_origenes[i] = aeropuerto
-        i+=1
+    for i in range(0, len(aeropuertos_origen)):
+        padres, orden = funciones.bfs(grafo, aeropuertos_origen[i])
+        for k in range(0, len(aeropuertos_destino)):
+            if orden[aeropuertos_destino[k]] < mejor_orden:
+                padres_final = padres
+                orden_final = orden
+                indice = i
+                destino_final = aeropuertos_destino[k]
 
-    for aeropuerto in grafo.obtener_aeropuertos(destino):
-        i = 0
-        while aeropuerto not in arreglo_padres[i]:
-            i+=1
-        if arreglo_ordenes[i] < mejor_orden:
-            mejor_orden = arreglo_ordenes[i]
-            mejores_padres = arreglo_padres[i]
-            codigo_destino = aeropuerto
-            codigo_origen = arreglo_origenes[i]
 
-    v = mejores_padres[codigo_destino]
     lista = []
-    lista.append(codigo_destino)
+    lista.append(destino_final)
+    v = lista[0]
 
-    while v != codigo_origen:
+    while v != aeropuertos_origen[indice]:
+        v = padres_final[v]
         lista.append(v)
-        v = mejores_padres[v]
 
-    if v != mejores_padres[codigo_destino]:
-        lista.append(v)
 
     while lista:
-        if len(lista) == 1:
-            print(lista.pop())
+        if len(lista) != 1:
+            print lista.pop()+"->",
 
         else:
-            print(lista.pop(), "->")
+            print lista.pop()
 
 
 def centralidad_aprox(grafo, linea):
