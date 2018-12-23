@@ -1,7 +1,7 @@
 # !/usr/bin/python3
 
 import funciones
-
+import math
 
 
 def camino_mas(grafo, linea):
@@ -49,17 +49,38 @@ def camino_escalas(grafo, linea):
 
     origen = parametros[0]
     destino = parametros[1]
+    arreglo_ordenes = []
+    arreglo_padres = []
+    arreglo_origenes = []
+    i = 0
+    mejor_orden = float('inf')
 
-    padres, orden = funciones.bfs(grafo, grafo.obtener_codigo(origen))
-    v = padres[grafo.obtener_codigo(destino)]
+    for aeropuerto in grafo.obtener_aeropuertos(origen):
+        padres, orden = funciones.bfs(grafo, aeropuerto)
+        arreglo_ordenes[i] = orden
+        arreglo_padres[i] = padres
+        arreglo_origenes[i] = aeropuerto
+        i+=1
+
+    for aeropuerto in grafo.obtener_aeropuertos(destino):
+        i = 0
+        while aeropuerto not in arreglo_padres[i]:
+            i+=1
+        if arreglo_ordenes[i] < mejor_orden:
+            mejor_orden = arreglo_ordenes[i]
+            mejores_padres = arreglo_padres[i]
+            codigo_destino = aeropuerto
+            codigo_origen = arreglo_origenes[i]
+
+    v = mejores_padres[codigo_destino]
     lista = []
-    lista.append(grafo.obtener_codigo(destino))
+    lista.append(codigo_destino)
 
-    while v != grafo.obtener_codigo(origen):
+    while v != codigo_origen:
         lista.append(v)
-        v = padres[v]
+        v = mejores_padres[v]
 
-    if v != padres[grafo.obtener_codigo(destino)]:
+    if v != mejores_padres[codigo_destino]:
         lista.append(v)
 
     while lista:
