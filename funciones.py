@@ -12,7 +12,6 @@ def obtener_parametros(linea):
 	sep = " "
 	aux1 = []
 	parametros_final = []
-	parametros_final.append(parametros[0])
 
 	for i in range(1, len(parametros)):
 		aux1.append(parametros[i])
@@ -241,4 +240,3 @@ def centralidad(grafo):
 			cent[w] += cent_aux[w]
 
 	return cent
-
