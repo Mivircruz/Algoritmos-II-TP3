@@ -14,13 +14,13 @@ class Vertice(object):
         return self.ciudad
 
     def obtener_tiempo(self, codigo):
-        if codigo not in adyacentes:
+        if codigo not in self.adyacentes:
             return None
         datos_conexion = self.adyacentes.get(codigo)
         return datos_conexion[0]
 
     def obtener_precio(self, codigo):
-        if codigo not in adyacentes:
+        if codigo not in self.adyacentes:
             return None
         datos_conexion = self.adyacentes.get(codigo)
         return datos_conexion[1]
@@ -36,6 +36,14 @@ class Vertice(object):
 
     def obtener_adyacente(self, codigo):
         return self.adyacentes[codigo]
+
+    def son_adyacentes(self, codigo_ady):
+        if codigo_ady in self.adyacentes:
+            return True
+        return False
+
+    def obtener_adyacentes(self):
+        return self.adyacentes
 
     def son_adyacentes(self, codigo_ady):
         if codigo_ady in self.adyacentes:
