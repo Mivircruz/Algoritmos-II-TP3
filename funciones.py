@@ -72,6 +72,7 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 	padres = {}
 	visitados = set()
 	heap = []
+	peso_total = 0
 
 	for key in grafo.obtener_todos_vertices():
 		distancia[key] = float('inf')
@@ -100,10 +101,11 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 
 				if vertice[0] + peso < distancia[adyacente]:
 					distancia[adyacente] = vertice[0] + peso
+					peso_total += peso
 					padres[adyacente] = vertice[1]
 					heapq.heappush(heap, (distancia[adyacente], adyacente))
 
-	return padres, distancia
+	return padres, distancia, peso_total
 
 def prim(grafo, aeropuerto_origen, modo):
 
@@ -112,13 +114,13 @@ def prim(grafo, aeropuerto_origen, modo):
 	heap = []
 	arbol = g.Grafo()
 	vertice_actual = grafo.obtener_vertice(aeropuerto_origen)
+	peso_total = 0
 
 	for adyacente in vertice_actual.obtener_adyacentes().keys():
 		if modo == "barato":
 			peso_arista = grafo.obtener_precio(aeropuerto_origen, adyacente)
 		else:
 			peso_arista = grafo.obtener_tiempo(aeropuerto_origen, adyacente)
-
 		heapq.heappush(heap, (peso_arista, adyacente, aeropuerto_origen))
 
 
@@ -138,7 +140,6 @@ def prim(grafo, aeropuerto_origen, modo):
 			arbol.agregar_arista(v[1], v[2], v[0], 0, 0)
 
 		visitados.append(grafo.obtener_ciudad(v[1]))
-
 		vertice_actual = grafo.obtener_vertice(v[1])
 
 		for key in vertice_actual.obtener_adyacentes().keys():
@@ -150,10 +151,10 @@ def prim(grafo, aeropuerto_origen, modo):
 					a_guardar = grafo.obtener_precio(v[1], key)
 				else:
 					a_guardar = grafo.obtener_tiempo(v[1], key)
-
+				peso_total += a_guardar
 				heapq.heappush(heap, (a_guardar, key, v[1]))
 
-	return arbol
+	return arbol, peso_total
 
 
 def recorrido_vacaciones(grafo, v, padres, contador, destino, n):
