@@ -44,9 +44,8 @@ def main():
             continue
 
         else:
-            comandos.comandos.get(a_ejecutar[0])(grafo, a_ejecutar[1])
+            comandos.comandos.get(a_ejecutar[0])(grafo, linea)
 
         linea = sys.stdin.readline().rstrip('\n')
 
 main()
-
