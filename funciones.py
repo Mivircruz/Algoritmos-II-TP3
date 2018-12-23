@@ -66,26 +66,6 @@ def bfs(grafo, origen):
 
 	return padres, orden
 
-def obtener_peso_minimo(grafo, aeropuerto_origen, destino, modo):
-	mejor_peso = float('inf')
-	mejor_aeropuerto = None
-
-	for aeropuerto_destino in grafo.obtener_aeropuertos(destino):
-
-		if modo == "barato":
-			peso_actual = grafo.obtener_precio(aeropuerto_origen,aeropuerto_destino)
-		elif modo == "rapido":
-			peso_actual = grafo.obtener_tiempo(aeropuerto_origen,aeropuerto_destino)
-		else:
-			peso_actual = grafo.obtener_cant_vuelos(aeropuerto_origen,aeropuerto_destino)
-
-		if peso_actual < mejor_peso:
-			mejor_peso = peso_actual
-			mejor_aeropuerto = aeropuerto_destino
-
-	return mejor_aeropuerto
-
-
 def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 
 	distancia = {}
@@ -93,9 +73,8 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 	visitados = set()
 	heap = []
 
-	for vertice in grafo.obtener_todos_vertices().keys():
-		for aeropuerto in grafo.obtener_aeropuertos(grafo.obtener_ciudad(vertice)):
-			distancia[aeropuerto] = float('inf')
+	for key in grafo.obtener_todos_vertices():
+		distancia[key] = float('inf')
 
 	distancia[aeropuerto_origen] = 0
 	padres[aeropuerto_origen] = None
@@ -105,15 +84,15 @@ def camino_minimo(grafo, aeropuerto_origen, destino, modo):
 	while heap:
 
 		vertice = heapq.heappop(heap)
-		visitados.add(grafo.obtener_ciudad(vertice[1]))
+		ciudad_actual = grafo.obtener_ciudad(vertice[1])
+		visitados.add(ciudad_actual)
 
-		if grafo.obtener_ciudad(vertice[1]) == destino:
+		if ciudad_actual == destino:
 			return padres, distancia
 
-		for adyacente in grafo.obtener_adyacentes(vertice[1]).keys():
+		for adyacente in grafo.obtener_adyacentes(v[1]).keys():
 			ciudad_adyacente = grafo.obtener_ciudad(adyacente)
 			if ciudad_adyacente not in visitados:
-				adyacente = obtener_peso_minimo(grafo, vertice[1], ciudad_adyacente, modo)
 				if modo == "barato":
 					peso = grafo.obtener_precio(vertice[1], adyacente)
 				else:
@@ -167,7 +146,6 @@ def prim(grafo, aeropuerto_origen, modo):
 
 			if ciudad_adyacente not in visitados:
 
-				key = obtener_peso_minimo(grafo, v[1], ciudad_adyacente, modo)
 				if modo == "barato":
 					a_guardar = grafo.obtener_precio(v[1], key)
 				else:
