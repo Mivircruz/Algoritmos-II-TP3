@@ -11,15 +11,26 @@ def camino_mas(grafo, linea):
     modo = parametros[0]
     origen = parametros[1]
     destino = parametros[2]
+    aeropuertos = grafo.obtener_aeropuertos(origen)
+    peso_min = float('inf')
+    padres_final = {}
+    destino_final = None
+    indice = 0
 
+    for i in range(0, len(aeropuertos)):
+        padres, dist, peso, destino = funciones.camino_minimo(grafo, aeropuertos[i], destino, modo)
+        if peso < peso_min:
+            padres_final = padres
+            peso_min = peso
+            destino_final = destino
+            indice = i
 
-    padres, dist = funciones.camino_minimo(grafo, origen, destino, modo)
     lista = []
-    lista.append(grafo.obtener_codigo(destino))
+    lista.append(destino_final)
     v = lista[0]
 
-    while v != origen:
-        v = padres[v]
+    while v != aeropuertos[indice]:
+        v = padres_final[v]
         lista.append(v)
 
 
@@ -29,7 +40,6 @@ def camino_mas(grafo, linea):
 
         else:
             print(lista.pop(), "->")
-
 
 
 def camino_escalas(grafo, linea):
