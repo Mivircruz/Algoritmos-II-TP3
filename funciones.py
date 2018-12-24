@@ -4,7 +4,7 @@ import heapq
 import math
 import grafo
 import vertice as v
-
+import operator
 
 def obtener_parametros(linea):
 
@@ -196,12 +196,6 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     return recorrer_lugares(grafo, lugares, mejor_aeropuerto, costo, visitados)
 
 
-def ordenar_vertices(dist):
-
-    lista = dist.items()
-    lista.sort(key=lambda x: x[1])
-
-    return lista
 
 def centralidad(grafo):
     cent = {}
@@ -221,7 +215,7 @@ def centralidad(grafo):
                 if math.isinf(a):
                     dist.pop(a)
 
-        vertices_ordenados = ordenar_vertices(dist)
+        vertices_ordenados = sorted(dist.items(), key=operator.itemgetter(1))
 
         for w in vertices_ordenados:
             if w[0] == key1:
