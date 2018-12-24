@@ -108,25 +108,9 @@ def recorrer_mundo_aprox(grafo, linea):
     visitados = []
     costo = 0
 
-    while lugares_del_mundo:
+    recorrer_mundo_aprox(lugares,)
 
-        codigo_actual = grafo.obtener_codigo(actual)
-        visitados.append(codigo_actual)
-        lugares_del_mundo.pop(actual)
-
-        for ady in grafo.obtener_adyacentes(codigo_actual).keys():
-
-            ady = funciones.obtener_peso_minimo(grafo, codigo_actual, ady, "rapido")
-            ciudad_ady = grafo.obtener_ciudad(ady)
-            if ciudad_ady == actual:
-                continue
-
-            tiempo_ady = grafo.obtener_tiempo(codigo_actual, ady)
-            if  tiempo_ady < tiempo:
-                tiempo = tiempo_ady
-                actual = ciudad_ady
-        costo += tiempo
-
+    
     for i in range(0, len(visitados)):
         print visitados[i]
         if i < len(visitados) - 1:

@@ -222,3 +222,31 @@ def centralidad(grafo):
 			cent[w] += cent_aux[w]
 
 	return cent
+
+def recorrer_lugares(lugares, actual, costo):
+
+	if len(lugares) == 0:
+		return
+
+	mejor_tiempo = float('inf')
+
+	ciudad_actual = grafo.obtener_ciudad(actual)
+
+	for adyacente in grafo.obtener_adyacentes(ciudad_actual):
+
+		ciudad_ady = ciudad_actual
+
+		for aeropuerto in grafo.obtener_aeropuertos(adyacente):
+
+			if ciudad_ady == grafo.obtener_ciudad(actual):
+				break
+			tiempo = grafo.obtener_tiempo(actual, aeropuerto)
+			if tiempo < mejor_tiempo:
+				mejor_tiempo = tiempo
+				mejor_aeropuerto = aeropuerto
+				ciudad_prox = ciudad_ady
+
+	costo += mejor_tiempo
+	lugares.pop(ciudad_prox)
+
+	return recorrer_lugares(lugares,mejor_aeropuerto,costo)
