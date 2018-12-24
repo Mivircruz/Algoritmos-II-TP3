@@ -7,6 +7,12 @@ class Vertice(object):
         self.longitud = longitud
         self.adyacentes = {}
 
+    def obtener_latitud(self):
+        return self.latitud
+
+    def obtener_longitud(self):
+        return self.longitud
+
     def obtener_codigo(self):
         return self.codigo
 

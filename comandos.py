@@ -3,7 +3,12 @@
 import funciones
 import operator
 
+ultima_ruta = []
+
 def camino_mas(grafo, linea):
+
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
 
     parametros = funciones.obtener_parametros(linea)
     if len(parametros) != 3:
@@ -36,16 +41,23 @@ def camino_mas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print(lista.pop(), end=" ")
+            aeropuerto = lista.pop()
+            ultima_ruta.append(aeropuerto)
+            print(aeropuerto, end=" ")
             print("->", end=" ")
 
         else:
-            print(lista.pop())
+            aeropuerto = lista.pop()
+            print(aeropuerto)
+            ultima_ruta.append(aeropuerto)
 
     return True
 
 
 def camino_escalas(grafo, linea):
+
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
 
     parametros = funciones.obtener_parametros(linea)
     if len(parametros) != 2:
@@ -65,7 +77,6 @@ def camino_escalas(grafo, linea):
         for k in range(0, len(aeropuertos_destino)):
             if orden[aeropuertos_destino[k]] < mejor_orden:
                 padres_final = padres
-                orden_final = orden
                 indice = i
                 destino_final = aeropuertos_destino[k]
 
@@ -81,11 +92,15 @@ def camino_escalas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print(lista.pop(), end=" ")
+            aeropuerto = lista.pop()
+            print(aeropuerto, end=" ")
+            ultima_ruta.append(aeropuerto)
             print("->", end=" ")
 
         else:
-            print(lista.pop())
+            aeropuerto = lista.pop()
+            print(aeropuerto)
+            ultima_ruta.append(aeropuerto)
 
     return True
 
@@ -109,6 +124,9 @@ def centralidad_aprox(grafo, linea):
 
 
 def recorrer_mundo_aprox(grafo, linea):
+
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
 
     parametros = funciones.obtener_parametros(linea)
 
@@ -136,6 +154,9 @@ def recorrer_mundo_aprox(grafo, linea):
 
 def vacaciones(grafo, linea):
 
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
+
     parametros = funciones.obtener_parametros(linea)
     if len(parametros) != 2:
         return False
@@ -157,24 +178,29 @@ def vacaciones(grafo, linea):
         for i in range(0,len(visitados)):
             print(visitados[i], end=" ")
             print("->", end=" ")
+            ultima_ruta.append(visitados[i])
         print(aeropuerto_origen)
+        ultima_ruta.append(aeropuerto_origen)
 
     return True
 
 def nueva_aerolinea(grafo, linea):
 
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
+
     parametros = funciones.obtener_parametros(linea)
     if len(parametros) != 1:
         return False
 
-    ruta = parametros[0]
-    archivo = open(ruta, 'w')
+    archivo = open(parametros[0], 'w')
 
 #ORIGEN HARDCODEADO
 
     arbol, peso_total = funciones.prim(grafo,"SAN","barato")
 
     for aeropuerto in arbol.obtener_todos_vertices().keys():
+        ultima_ruta.append(aeropuerto)
         archivo.write(aeropuerto + ',')
 
     archivo.close()
@@ -182,12 +208,68 @@ def nueva_aerolinea(grafo, linea):
     return True
 
 
+def exportar_kml(grafo, linea):
+
+    parametros = funciones.obtener_parametros(linea)
+    if len(parametros) != 1 or len(ultima_ruta) == 0:
+        return False
+
+    archivo = open(parametros[0], "w")
+
+    #Encabezado
+    archivo.write('<?xml version="1.0" encoding="UTF-8"?>')
+
+    #Declaración de KML
+    archivo.write('<kml xmlns="http://www.opengis.net/kml/2.2">')
+    archivo.write('        <Document>')
+
+    for i in range(0, len(ultima_ruta)):
+
+        #Contenido geográfico
+
+        ciudad = grafo.obtener_ciudad(ultima_ruta[i])
+        latitud = grafo.obtener_latitud(ultima_ruta[i])
+        longitud = grafo.obtener_longitud(ultima_ruta[i])
+
+        archivo.write('<Placemark>')
+        archivo.write('<name>' + ciudad + '</name>')
+        archivo.write('<Point>')
+        archivo.write(' <coordinates>' + longitud + latitud + '</coordinates>')
+        archivo.write('</Point>')
+        archivo.write('</Placemark>')
+
+    archivo.write('<Placemark>')
+    archivo.write('<LineString>')
+    archivo.write('<coordinates>')
+
+    for i in range(1, len(ultima_ruta)-1):
+
+        lat_prim = grafo.obtener_latitud(ultima_ruta[i-1])
+        long_prim = grafo.obtener_longitud(ultima_ruta[i-1])
+        lat_seg = grafo.obtener_latitud(ultima_ruta[i])
+        long_seg = grafo.obtener_longitud(ultima_ruta[i])
+
+        archivo.write(long_prim + lat_prim + ',' + long_seg + lat_seg)
+
+    archivo.write('</coordinates>')
+    archivo.write('    </LineString>')
+    archivo.write('</Placemark>')
+
+    #Fin de Documento
+
+    archivo.write('    </Document>')
+    archivo.write('/kml')
+
+    archivo.close()
+    return True
+
 comandos = {
     "camino_mas": camino_mas,
     "camino_escalas": camino_escalas,
     "centralidad_aprox": centralidad_aprox,
     "recorrer_mundo_aprox": recorrer_mundo_aprox,
     "vacaciones": vacaciones,
-    "nueva_aerolinea": nueva_aerolinea
+    "nueva_aerolinea": nueva_aerolinea,
+    "exportar_kml": exportar_kml
 }
 

@@ -65,6 +65,12 @@ class Grafo(object):
 			return False
 		return True
 
+	def obtener_latitud(self,codigo):
+		return self.vertices[codigo].obtener_latitud()
+
+	def obtener_longitud(self,codigo):
+		return self.vertices[codigo].obtener_longitud()
+
 	def __iter__(self):
 		return iter(self.vertices.values)
 

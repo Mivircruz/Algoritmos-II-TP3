@@ -31,6 +31,7 @@ def main():
     linea = sys.stdin.readline().rstrip('\n')
 
     while len(linea) > 0:
+
         a_ejecutar = linea.split(" ")
 
         if a_ejecutar[0] == "listar_operaciones":
