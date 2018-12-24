@@ -174,11 +174,11 @@ def nueva_aerolinea(grafo, linea):
 
     arbol, peso_total = funciones.prim(grafo,"SAN","barato")
 
-    for aeropuerto in arbol.obtener_vertices().keys():
+    for aeropuerto in arbol.obtener_todos_vertices().keys():
         archivo.write(aeropuerto + ',')
 
     archivo.close()
-    print("Ok")
+    print("OK")
     return True
 
 
@@ -187,6 +187,7 @@ comandos = {
     "camino_escalas": camino_escalas,
     "centralidad_aprox": centralidad_aprox,
     "recorrer_mundo_aprox": recorrer_mundo_aprox,
-    "vacaciones": vacaciones
+    "vacaciones": vacaciones,
+    "nueva_aerolinea": nueva_aerolinea
 }
 

@@ -39,7 +39,6 @@ def main():
 
         elif a_ejecutar[0] not in comandos.comandos.keys():
             print("Error")
-            continue
 
         else:
             todo_ok = comandos.comandos.get(a_ejecutar[0])(grafo, linea)

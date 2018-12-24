@@ -2,7 +2,7 @@
 
 import heapq
 import math
-import grafo
+import grafo as g
 import vertice as v
 import operator
 
@@ -111,7 +111,7 @@ def prim(grafo, aeropuerto_origen, modo):
     visitados = []
     visitados.append(aeropuerto_origen)
     heap = []
-    arbol = grafo.Grafo()
+    arbol = g.Grafo()
     vertice_actual = grafo.obtener_vertice(aeropuerto_origen)
     peso_total = 0
 
@@ -147,7 +147,7 @@ def prim(grafo, aeropuerto_origen, modo):
                     a_guardar = grafo.obtener_precio(v[1], key)
                 else:
                     a_guardar = grafo.obtener_tiempo(v[1], key)
-                peso_total += a_guardar
+                peso_total += int(a_guardar)
                 heapq.heappush(heap, (a_guardar, key, v[1]))
     return arbol, peso_total
 
