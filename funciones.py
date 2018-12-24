@@ -157,24 +157,23 @@ def prim(grafo, aeropuerto_origen, modo):
 	return arbol, peso_total
 
 
-def recorrido_vacaciones(grafo, v, padres, contador, destino, n, visitados):
+def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
 
-	ciudad_actual = grafo.obtener_ciudad(v)
 	visitados.append(v)
 
-	if contador == n and ciudad_actual == destino:
+	if contador == n:
 		return True
 
-	if contador == n and ciudad_actual != destino:
-		return False
-
 	for adyacente in grafo.obtener_adyacentes(v).keys():
-		if adyacente in visitados:
-			continue
-		padres[adyacente] = v
+		if adyacente not in visitados:
+			if adyacente not in visitados:
+				if contador == n-1:
+					if origen not in grafo.obtener_adyacentes(adyacente):
+						break
 		contador += 1
-		if recorrido_vacaciones(grafo, adyacente, padres, contador, destino, n, visitados):
+		if recorrido_vacaciones(grafo, origen, adyacente, contador, n, visitados):
 			return True
+
 	padres.pop(v)
 	return False
 
@@ -223,7 +222,7 @@ def centralidad(grafo):
 
 	return cent
 
-def recorrer_lugares(lugares, actual, costo):
+def recorrer_lugares(grafo, lugares, actual, costo):
 
 	if len(lugares) == 0:
 		return

@@ -125,20 +125,17 @@ def vacaciones(grafo, linea):
     visitados = []
     n = parametros[1]
 
-    padres = {}
-
     for aeropuerto in grafo.obtener_aeropuertos(origen):
-        padres[aeropuerto] = None
-        if funciones.recorrido_vacaciones(grafo, aeropuerto, padres, 0, origen, n, visitados):
+        if funciones.recorrido_vacaciones(grafo, aeropuerto, aeropuerto, 0, int(n), visitados):
+            aeropuerto_origen = aeropuerto
             break
 
     if len(visitados) == 0:
         print "No se encontro recorrido"
     else:
-         for values in padres.values():
-           print values
-           print" -> "
-
+        for i in range(0,len(visitados)):
+            print visitados[i], " -> "
+        print aeropuerto_origen
 comandos = {
     "camino_mas": camino_mas,
     "camino_escalas": camino_escalas,
