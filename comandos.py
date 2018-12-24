@@ -34,7 +34,8 @@ def camino_mas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print(lista.pop(), " -> ")
+            print(lista.pop(), end=" ")
+            print("->", end=" ")
 
         else:
             print(lista.pop())
@@ -75,7 +76,8 @@ def camino_escalas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print(lista.pop(), " -> ")
+            print(lista.pop(), end=" ")
+            print("->", end=" ")
 
         else:
             print(lista.pop())
@@ -90,7 +92,7 @@ def centralidad_aprox(grafo, linea):
 
     for i in range(0, int(parametros[0])):
         if i != int(parametros[0])-1:
-            print(vertices.pop()[0], ",")
+            print(vertices.pop()[0], ",", end=" ")
         else:
             print(vertices.pop()[0])
 
@@ -109,9 +111,11 @@ def recorrer_mundo_aprox(grafo, linea):
             break
     
     for i in range(0, len(visitados)):
-        print(visitados[i])
         if i < len(visitados) - 1:
-            print(" -> ")
+            print(visitados[i], end=" ")
+            print(" -> ", end=" ")
+        else:
+            print(visitados[i])
     print("Costo: ", costo)
 
 
@@ -132,7 +136,9 @@ def vacaciones(grafo, linea):
         print("No se encontro recorrido")
     else:
         for i in range(0,len(visitados)):
-            print(visitados[i], " -> ")
+            print(visitados[i], end=" ")
+            if i < len(visitados)-1:
+                print("->", end=" ")
         print(aeropuerto_origen)
 
 comandos = {
