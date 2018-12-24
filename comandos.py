@@ -102,14 +102,13 @@ def recorrer_mundo_aprox(grafo, linea):
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
 
-    lugares_del_mundo = grafo.obtener_todas_ciudades()
-    tiempo = float('inf')
-    actual = origen
+    lugares = grafo.obtener_todas_ciudades()
     visitados = []
     costo = 0
 
-    recorrer_mundo_aprox(lugares,)
-
+    for aeropuerto in grafo.obtener_aeropuertos(origen):
+        if funciones.recorrer_lugares(grafo, lugares, aeropuerto, costo, visitados):
+            break
     
     for i in range(0, len(visitados)):
         print visitados[i]
