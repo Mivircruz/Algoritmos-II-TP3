@@ -207,7 +207,6 @@ def nueva_aerolinea(grafo, linea):
     print("OK")
     return True
 
-
 def exportar_kml(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
@@ -217,30 +216,27 @@ def exportar_kml(grafo, linea):
     archivo = open(parametros[0], "w")
 
     #Encabezado
-    archivo.write('<?xml version="1.0" encoding="UTF-8"?>')
+    archivo.write('<?xml version="1.0" encoding="UTF-8"?>\n')
 
     #Declaración de KML
-    archivo.write('<kml xmlns="http://www.opengis.net/kml/2.2">')
-    archivo.write('        <Document>')
+    archivo.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
+    archivo.write('\t<Document>\n\t')
 
     for i in range(0, len(ultima_ruta)):
 
         #Contenido geográfico
 
-        ciudad = grafo.obtener_ciudad(ultima_ruta[i])
+        ciudad = ultima_ruta[i]
         latitud = grafo.obtener_latitud(ultima_ruta[i])
         longitud = grafo.obtener_longitud(ultima_ruta[i])
 
-        archivo.write('<Placemark>')
-        archivo.write('<name>' + ciudad + '</name>')
-        archivo.write('<Point>')
-        archivo.write(' <coordinates>' + longitud + latitud + '</coordinates>')
-        archivo.write('</Point>')
-        archivo.write('</Placemark>')
+        archivo.write('\n\t\t<Placemark>\n\t')
+        archivo.write('\t\t<name>' + ciudad + '</name>\n\t')
+        archivo.write('\t\t<Point>\n\t')
+        archivo.write('\t\t\t<coordinates>' + longitud.rstrip('\n') + ', ' + latitud + '</coordinates>\n\t')
+        archivo.write('\t\t</Point>\n\t')
+        archivo.write('\t</Placemark>\n')
 
-    archivo.write('<Placemark>')
-    archivo.write('<LineString>')
-    archivo.write('<coordinates>')
 
     for i in range(1, len(ultima_ruta)-1):
 
@@ -249,16 +245,17 @@ def exportar_kml(grafo, linea):
         lat_seg = grafo.obtener_latitud(ultima_ruta[i])
         long_seg = grafo.obtener_longitud(ultima_ruta[i])
 
-        archivo.write(long_prim + lat_prim + ',' + long_seg + lat_seg)
+        archivo.write('\n\t\t<Placemark>\n\t')
+        archivo.write('\t\t<LineString>\n\t')
+        archivo.write('\t\t\t<coordinates>' + long_prim.rstrip('\n') + ', ' + lat_prim.rstrip('\n') + ' ' + long_seg.rstrip('\n') + ', ' + lat_seg + '</coordinates>\n\t')
+        archivo.write('\t\t</LineString>\n\t')
+        archivo.write('\t</Placemark>\n')
 
-    archivo.write('</coordinates>')
-    archivo.write('    </LineString>')
-    archivo.write('</Placemark>')
 
     #Fin de Documento
 
-    archivo.write('    </Document>')
-    archivo.write('/kml')
+    archivo.write('\n\t</Document>')
+    archivo.write('\n</kml>')
 
     archivo.close()
     return True
