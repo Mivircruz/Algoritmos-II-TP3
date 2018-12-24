@@ -37,7 +37,7 @@ def main():
 
         if a_ejecutar[0] == "listar_operaciones":
             for funcion in comandos.comandos:
-                print funcion
+                print(funcion)
 
         elif a_ejecutar[0] not in comandos.comandos.keys():
             print("Error")

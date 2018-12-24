@@ -1,8 +1,6 @@
 # !/usr/bin/python3
 
 import funciones
-import math
-
 
 def camino_mas(grafo, linea):
 
@@ -36,10 +34,10 @@ def camino_mas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print lista.pop()+" -> ",
+            print(lista.pop(), " -> ")
 
         else:
-            print lista.pop()
+            print(lista.pop())
 
 
 
@@ -77,10 +75,10 @@ def camino_escalas(grafo, linea):
 
     while lista:
         if len(lista) != 1:
-            print lista.pop()+"->",
+            print(lista.pop(), " -> ")
 
         else:
-            print lista.pop()
+            print(lista.pop())
 
 
 def centralidad_aprox(grafo, linea):
@@ -92,9 +90,9 @@ def centralidad_aprox(grafo, linea):
 
     for i in range(0, int(parametros[0])):
         if i != int(parametros[0])-1:
-            print vertices.pop()[0]+",",
+            print(vertices.pop()[0], ",")
         else:
-            print vertices.pop()[0]
+            print(vertices.pop()[0])
 
 
 def recorrer_mundo_aprox(grafo, linea):
@@ -111,16 +109,17 @@ def recorrer_mundo_aprox(grafo, linea):
             break
     
     for i in range(0, len(visitados)):
-        print visitados[i]
+        print(visitados[i])
         if i < len(visitados) - 1:
-            print" -> "
-    print"Costo: "+costo
+            print(" -> ")
+    print("Costo: ", costo)
 
 
 def vacaciones(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
     origen = parametros[0]
+    aeropuerto_origen = None
     visitados = []
     n = parametros[1]
 
@@ -130,11 +129,12 @@ def vacaciones(grafo, linea):
             break
 
     if len(visitados) == 0:
-        print "No se encontro recorrido"
+        print("No se encontro recorrido")
     else:
         for i in range(0,len(visitados)):
-            print visitados[i], " -> "
-        print aeropuerto_origen
+            print(visitados[i], " -> ")
+        print(aeropuerto_origen)
+
 comandos = {
     "camino_mas": camino_mas,
     "camino_escalas": camino_escalas,
