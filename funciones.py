@@ -111,7 +111,7 @@ def prim(grafo, aeropuerto_origen, modo):
     visitados = []
     visitados.append(aeropuerto_origen)
     heap = []
-    arbol = g.Grafo()
+    arbol = grafo.Grafo()
     vertice_actual = grafo.obtener_vertice(aeropuerto_origen)
     peso_total = 0
 
@@ -121,8 +121,6 @@ def prim(grafo, aeropuerto_origen, modo):
         else:
             peso_arista = grafo.obtener_tiempo(aeropuerto_origen, adyacente)
         heapq.heappush(heap, (peso_arista, adyacente, aeropuerto_origen))
-
-#POR QUe VALUES SI USAS EL VERTICE COMO CLASE PARA LLAMAR A LAS PRIMITIVAS???
 
     for v in grafo.obtener_todos_vertices().values():
         arbol.agregar_vertice(v.obtener_ciudad(), v.obtener_codigo(), 0, 0)

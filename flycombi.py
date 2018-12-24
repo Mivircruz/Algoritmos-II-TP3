@@ -28,9 +28,6 @@ def main():
     grafo = conexiones(aeropuerto, vuelos)
     todo_ok = True
 
-   # sys.argv[1].close()
-   # sys.argv[2].close()
-
     linea = sys.stdin.readline().rstrip('\n')
 
     while len(linea) > 0:
@@ -50,5 +47,8 @@ def main():
             print("Error")
 
         linea = sys.stdin.readline().rstrip('\n')
+
+    sys.argv[1].close()
+    sys.argv[2].close()
 
 main()

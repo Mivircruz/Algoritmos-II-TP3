@@ -160,6 +160,27 @@ def vacaciones(grafo, linea):
 
     return True
 
+def nueva_aerolinea(grafo, linea):
+
+    parametros = funciones.obtener_parametros(linea)
+    if len(parametros) != 1:
+        return False
+
+    ruta = parametros[0]
+    archivo = open(ruta, 'w')
+
+#ORIGEN HARDCODEADO
+
+    arbol, peso_total = funciones.prim(grafo,"SAN","barato")
+
+    for aeropuerto in arbol.obtener_vertices().keys():
+        archivo.write(aeropuerto + ',')
+
+    archivo.close()
+    print("Ok")
+    return True
+
+
 comandos = {
     "camino_mas": camino_mas,
     "camino_escalas": camino_escalas,
