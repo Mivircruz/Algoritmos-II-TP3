@@ -5,7 +5,8 @@ import funciones
 def camino_mas(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
-
+    if len(parametros) != 3:
+        return False
     modo = parametros[0]
     origen = parametros[1]
     destino = parametros[2]
@@ -40,11 +41,14 @@ def camino_mas(grafo, linea):
         else:
             print(lista.pop())
 
+    return True
 
 
 def camino_escalas(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
+    if len(parametros) != 2:
+        return False
 
     origen = parametros[0]
     destino = parametros[1]
@@ -82,10 +86,14 @@ def camino_escalas(grafo, linea):
         else:
             print(lista.pop())
 
+    return True
+
 
 def centralidad_aprox(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
+    if len(parametros) != 1:
+        return False
 
     cent = funciones.centralidad(grafo)
     vertices = funciones.ordenar_vertices(cent)
@@ -96,12 +104,17 @@ def centralidad_aprox(grafo, linea):
         else:
             print(vertices.pop()[0])
 
+    return True
+
 
 def recorrer_mundo_aprox(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
-    origen = parametros[0]
 
+    if len(parametros) != 1:
+        return False
+
+    origen = parametros[0]
     lugares = grafo.obtener_todas_ciudades()
     visitados = []
     costo = 0
@@ -118,10 +131,14 @@ def recorrer_mundo_aprox(grafo, linea):
             print(visitados[i])
     print("Costo: ", costo)
 
+    return True
 
 def vacaciones(grafo, linea):
 
     parametros = funciones.obtener_parametros(linea)
+    if len(parametros) != 2:
+        return False
+
     origen = parametros[0]
     aeropuerto_origen = None
     visitados = []
@@ -140,6 +157,8 @@ def vacaciones(grafo, linea):
             if i < len(visitados)-1:
                 print("->", end=" ")
         print(aeropuerto_origen)
+
+    return True
 
 comandos = {
     "camino_mas": camino_mas,

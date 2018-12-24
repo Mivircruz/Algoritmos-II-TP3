@@ -26,6 +26,7 @@ def main():
     vuelos = open(sys.argv[2], "r")
 
     grafo = conexiones(aeropuerto, vuelos)
+    todo_ok = True
 
    # sys.argv[1].close()
    # sys.argv[2].close()
@@ -44,7 +45,9 @@ def main():
             continue
 
         else:
-            comandos.comandos.get(a_ejecutar[0])(grafo, linea)
+            todo_ok = comandos.comandos.get(a_ejecutar[0])(grafo, linea)
+        if not todo_ok:
+            print("Error")
 
         linea = sys.stdin.readline().rstrip('\n')
 
