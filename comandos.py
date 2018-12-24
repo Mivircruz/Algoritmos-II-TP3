@@ -1,6 +1,7 @@
 # !/usr/bin/python3
 
 import funciones
+import operator
 
 def camino_mas(grafo, linea):
 
@@ -96,7 +97,7 @@ def centralidad_aprox(grafo, linea):
         return False
 
     cent = funciones.centralidad(grafo)
-    vertices = funciones.ordenar_vertices(cent)
+    vertices = sorted(cent.items(), key=operator.itemgetter(1))
 
     for i in range(0, int(parametros[0])):
         if i != int(parametros[0])-1:
@@ -188,3 +189,4 @@ comandos = {
     "recorrer_mundo_aprox": recorrer_mundo_aprox,
     "vacaciones": vacaciones
 }
+
