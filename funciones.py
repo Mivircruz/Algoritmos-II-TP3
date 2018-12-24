@@ -178,19 +178,23 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
         return True
 
     mejor_tiempo = float('inf')
+    ciudad_prox = None
+    mejor_aeropuerto = None
+
 
     for adyacente in grafo.obtener_adyacentes(actual):
 
-        for aeropuerto in grafo.obtener_aeropuertos(adyacente):
+        if grafo.obtener_ciudad(adyacente) not in lugares:
+            continue
 
-            tiempo_actual = grafo.obtener_tiempo(actual, aeropuerto)
-            if tiempo_actual < mejor_tiempo:
-                mejor_tiempo = tiempo_actual
-                mejor_aeropuerto = aeropuerto
-                ciudad_prox = grafo.obtener_ciudad(adyacente)
+        tiempo_actual = grafo.obtener_tiempo(actual, adyacente)
+        if float(tiempo_actual) < float(mejor_tiempo):
+            mejor_tiempo = tiempo_actual
+            mejor_aeropuerto = adyacente
+            ciudad_prox = grafo.obtener_ciudad(adyacente)
 
-    costo += mejor_tiempo
-    lugares.pop(ciudad_prox)
+    costo += float(mejor_tiempo)
+    lugares.remove(ciudad_prox)
     visitados.append(mejor_aeropuerto)
 
     return recorrer_lugares(grafo, lugares, mejor_aeropuerto, costo, visitados)
