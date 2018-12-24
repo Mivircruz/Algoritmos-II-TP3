@@ -144,9 +144,10 @@ def vacaciones(grafo, linea):
     aeropuerto_origen = None
     visitados = []
     n = parametros[1]
+    contador = 1
 
     for aeropuerto in grafo.obtener_aeropuertos(origen):
-        if funciones.recorrido_vacaciones(grafo, aeropuerto, aeropuerto, 0, int(n), visitados):
+        if funciones.recorrido_vacaciones(grafo, aeropuerto, aeropuerto, contador, int(n), visitados):
             aeropuerto_origen = aeropuerto
             break
 
@@ -155,8 +156,7 @@ def vacaciones(grafo, linea):
     else:
         for i in range(0,len(visitados)):
             print(visitados[i], end=" ")
-            if i < len(visitados)-1:
-                print("->", end=" ")
+            print("->", end=" ")
         print(aeropuerto_origen)
 
     return True
