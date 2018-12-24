@@ -179,9 +179,6 @@ def recorrer_lugares(grafo, lugares, actual, costo, visitados):
     if len(lugares) == 0:
         return True
 
-
-    mejor_aeropuerto = None
-    ciudad_prox = None
     mejor_tiempo = float('inf')
 
     for adyacente in grafo.obtener_adyacentes(actual):
