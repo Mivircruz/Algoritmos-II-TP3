@@ -48,7 +48,7 @@ def main():
 
         linea = sys.stdin.readline().rstrip('\n')
 
-    sys.argv[1].close()
-    sys.argv[2].close()
+    eropuerto.close()
+    vuelos.close()
 
 main()
