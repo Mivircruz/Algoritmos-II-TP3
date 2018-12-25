@@ -169,7 +169,7 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
                 if recorrido_vacaciones(grafo, origen, adyacente, contador, n, visitados):
                     return True
 
-    visitados.pop(v)
+    visitados.remove(v)
     return False
 
 
