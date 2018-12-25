@@ -116,12 +116,11 @@ def centralidad_aprox(grafo, linea):
 
     for i in range(0, int(parametros[0])):
         if i != int(parametros[0])-1:
-            print(vertices.pop()[0], ",", end=" ")
+            print(vertices.pop()[0]+",", end=" ")
         else:
             print(vertices.pop()[0])
 
     return True
-
 
 def recorrer_mundo_aprox(grafo, linea):
 
