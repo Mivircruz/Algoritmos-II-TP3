@@ -165,9 +165,9 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
                 if contador == n-1:
                     if origen not in grafo.obtener_adyacentes(adyacente):
                         break
-        contador += 1
-        if recorrido_vacaciones(grafo, origen, adyacente, contador, n, visitados):
-            return True
+                contador += 1
+                if recorrido_vacaciones(grafo, origen, adyacente, contador, n, visitados):
+                    return True
 
     visitados.pop(v)
     return False

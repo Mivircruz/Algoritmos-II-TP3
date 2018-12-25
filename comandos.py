@@ -153,12 +153,12 @@ def recorrer_mundo_aprox(grafo, linea):
 
 def vacaciones(grafo, linea):
 
-    if len(ultima_ruta) != 0:
-        del ultima_ruta[:]
-
     parametros = funciones.obtener_parametros(linea)
     if len(parametros) != 2:
         return False
+
+    if len(ultima_ruta) != 0:
+        del ultima_ruta[:]
 
     origen = parametros[0]
     aeropuerto_origen = None
