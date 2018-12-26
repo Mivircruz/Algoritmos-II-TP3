@@ -35,6 +35,10 @@ class Grafo(object):
 	def obtener_todos_vertices(self):
 		return self.vertices
 
+	def obtener_vertice_random(self):
+		codigo_random = random.choice(list(self.vertices))
+		return self.vertices.get(codigo_random)
+
 	def obtener_aeropuertos(self, ciudad):
 
 		lista_aeropuertos = []

@@ -5,6 +5,7 @@ import math
 import grafo as g
 import vertice as v
 import operator
+import random
 
 def obtener_parametros(linea):
 
@@ -172,32 +173,20 @@ def recorrido_vacaciones(grafo, origen, v, contador, n, visitados):
     return False
 
 
-def recorrer_lugares(grafo, lugares, actual, costo, visitados):
+def recorrer_lugares(grafo, lugares, actual, costo, visitados, claves):
     if len(lugares) == 0:
         return True
 
-    mejor_tiempo = float('inf')
-    ciudad_prox = None
-    mejor_aeropuerto = None
+    codigo_random = random.choice(claves)
+    ciudad_random = grafo.obtener_ciudad(codigo_random)
+    padres, distancia, peso, aeropuerto_dest = camino_minimo(grafo, actual, ciudad_random, "rapido")
 
+    costo += peso
+    lugares.remove(ciudad_random)
+    visitados.append(aeropuerto_dest)
+    claves.remove(codigo_random)
 
-    for adyacente in grafo.obtener_adyacentes(actual):
-
-        if grafo.obtener_ciudad(adyacente) not in lugares:
-            continue
-
-        tiempo_actual = grafo.obtener_tiempo(actual, adyacente)
-        if float(tiempo_actual) < float(mejor_tiempo):
-            mejor_tiempo = tiempo_actual
-            mejor_aeropuerto = adyacente
-            ciudad_prox = grafo.obtener_ciudad(adyacente)
-
-    costo += float(mejor_tiempo)
-    lugares.remove(ciudad_prox)
-    visitados.append(mejor_aeropuerto)
-
-    return recorrer_lugares(grafo, lugares, mejor_aeropuerto, costo, visitados)
-
+    return recorrer_lugares(grafo, lugares, aeropuerto_dest, costo, visitados)
 
 
 def centralidad(grafo):

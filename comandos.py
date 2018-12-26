@@ -136,9 +136,10 @@ def recorrer_mundo_aprox(grafo, linea):
     lugares = grafo.obtener_todas_ciudades()
     visitados = []
     costo = 0
+    claves = list(grafo.obtener_todos_vertices().keys())
 
     for aeropuerto in grafo.obtener_aeropuertos(origen):
-        if funciones.recorrer_lugares(grafo, lugares, aeropuerto, costo, visitados):
+        if funciones.recorrer_lugares(grafo, lugares, aeropuerto, costo, visitados, claves):
             break
     
     for i in range(0, len(visitados)):
@@ -193,10 +194,10 @@ def nueva_aerolinea(grafo, linea):
         return False
 
     archivo = open(parametros[0], 'w')
+    vertice_random = grafo.obtener_vertice_random()
+    ciudad_random = vertice_random.obtener_ciudad()
 
-#ORIGEN HARDCODEADO
-
-    arbol, peso_total = funciones.prim(grafo,"SAN","barato")
+    arbol, peso_total = funciones.prim(grafo,ciudad_random,"barato")
 
     for aeropuerto in arbol.obtener_todos_vertices().keys():
         ultima_ruta.append(aeropuerto)

@@ -49,7 +49,7 @@ class Vertice(object):
         return False
 
     def obtener_adyacentes(self):
-        return self.adyacentes
+        return self.adyacentes.keys()
 
     def son_adyacentes(self, codigo_ady):
         if codigo_ady in self.adyacentes:
